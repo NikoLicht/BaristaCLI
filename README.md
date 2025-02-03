@@ -1,7 +1,7 @@
 # BaristaCLI
 A little quirky terminal coffee adventure game
 
-#How to run?
+# How to run?
 ```sh
 git clone [https://github.com/yourusername/my_project.git](https://github.com/NikoLicht/BaristaCLI.git)
 cd BaristaCLI
