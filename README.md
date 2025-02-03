@@ -1,5 +1,6 @@
 # BaristaCLI
 A little quirky terminal coffee adventure game. In this game you use actions on objects in order to achieve that delicious virtual brew. Have fun and play around.
+
 ![baristaCLI](https://github.com/user-attachments/assets/bab1f9bc-d1d2-4d37-87fc-4e2674fd02b4)
 
 # How to run?
