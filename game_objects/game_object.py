@@ -3,6 +3,7 @@ from src.grammar import Grammar
 from typing import TYPE_CHECKING, Dict
 from src.printing import *
 from src.state import Physical, Verbs
+from collections.abc import Callable
 if TYPE_CHECKING:
     from game import Game
 
@@ -22,6 +23,10 @@ class GameObject:
             "it": "it",
             "is": "is"
         }
+
+        #implement this dict if anythin particular should happen, when the state is changed.        
+        self.property_change_action: Dict[Physical, Callable] = {}
+
 
     def status(self):
         grammar = Grammar()
@@ -70,6 +75,14 @@ class GameObject:
 
     def register_callable_method(self, method_name, method):
         self._callable_methods[method_name] = method
+
+    def change_property(self, property: Physical) -> None:
+        if self.property != property:
+            self.property = property
+
+        if property in self.property_change_action.keys():
+            if self.property_change_action[property] is not None:
+                self.property_change_action[property]()
 
     def try_call_method(self, method_name, with_object = None):
         if method_name in self._callable_methods:

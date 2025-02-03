@@ -29,7 +29,7 @@ class Grinder(GameObject):
                 #Transform states
                 for obj in grinder_content:
                     if obj.property is Physical.SOLID:
-                        obj.property = Physical.SAND
+                        obj.change_property(Physical.SAND)
 
                 
                 self.contains_mixture(grinder_content)
@@ -40,7 +40,7 @@ class Grinder(GameObject):
 
             if single_object_state is Physical.SOLID:
                 say(f"You grind the {thing(single_object.name)} into a sand-like state.")
-                single_object.property = Physical.SAND
+                single_object.change_property(Physical.SAND)
             else:
                 say(f"You grind the {thing(single_object.name)}, but nothing happens, because it is a {single_object_state.name.lower()}.")
 
