@@ -3,8 +3,8 @@ from rich.console import Console
 console = Console()
 
 styles = {
-    "thing": "bold dark_red",
-    "action": "bold orange4",
+    "thing": "bold light_goldenrod3",
+    "action": "bold rosy_brown",
     "warn": "italic deep_pink4",
     "barista": "bold wheat4"
 }
