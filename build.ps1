@@ -6,18 +6,23 @@ $PROJECT_NAME = "BaristaCLI"
 $PYINSTALLER_FLAGS = "--onefile"
 $MAIN_SCRIPT = "barista.py"
 
-# Check if there are unstaged or unpushed changes
-$unstagedChanges = git status --porcelain | Select-String "^\s*M|^\s*D|^\s*A"
-$unpushedCommits = git log origin/main..HEAD --oneline
+# Check if this is a fresh clone (no .git folder means it's not a repo)
+if (Test-Path ".git") {
+    # Check for unstaged or unpushed changes only if it's not a fresh clone
+    $unstagedChanges = git status --porcelain | Select-String "^\s*M|^\s*D|^\s*A"
+    $unpushedCommits = git log origin/main..HEAD --oneline
 
-if ($unstagedChanges -or $unpushedCommits) {
-    Write-Host "WARNING: You have unstaged or unpushed changes!" -ForegroundColor Yellow
-    Write-Host "Do you want to continue with the build? (y/n)"
-    $confirmation = Read-Host
-    if ($confirmation -ne "y") {
-        Write-Host "Build aborted."
-        exit
+    if ($unstagedChanges -or $unpushedCommits) {
+        Write-Host "WARNING: You have unstaged or unpushed changes!" -ForegroundColor Yellow
+        Write-Host "Do you want to continue with the build? (y/n)"
+        $confirmation = Read-Host
+        if ($confirmation -ne "y") {
+            Write-Host "Build aborted."
+            exit
+        }
     }
+} else {
+    Write-Host "Fresh clone detected. Skipping unstaged/unpushed changes check."
 }
 
 # Get the latest version number
