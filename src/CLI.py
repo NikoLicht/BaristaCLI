@@ -4,6 +4,7 @@ from .grammar import Grammar
 from .printing import *
 from sys import exit
 from rich.console import Console
+import time
 
 if TYPE_CHECKING:
     from game import Game
@@ -40,6 +41,7 @@ class CLI():
         match command:
             case "exit" | "quit":
                 say("Bye! See you tomorrow!")
+                time.sleep(4)
                 exit(0)
 
             case "help":
@@ -79,7 +81,7 @@ class CLI():
 
     def run(self):
         say(
-            "Welcome to CLI coffee bar, where you make your own coffee.",
+            "Welcome to BaristaCLI a virtual coffee bar, where you make your own coffee.",
             f"    {action("quit")} - to leave your job as barista.",
             f"    {action("help")} - to get more info about it all.",
             f"    {action("objects")} - to list all objects.",
