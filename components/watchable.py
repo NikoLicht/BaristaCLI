@@ -1,5 +1,5 @@
 from .component import Component
-from printing import *
+from src.printing import *
 
 class Watchable(Component):
     def __init__(self, flavour_text, on_watch: callable = None):

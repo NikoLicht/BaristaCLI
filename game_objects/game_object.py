@@ -1,8 +1,8 @@
 from components.component import Component
-from grammar import Grammar
+from src.grammar import Grammar
 from typing import TYPE_CHECKING, Dict
-from printing import *
-from state import Physical, Verbs
+from src.printing import *
+from src.state import Physical, Verbs
 if TYPE_CHECKING:
     from game import Game
 

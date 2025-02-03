@@ -1,6 +1,6 @@
 from .game_object import GameObject
 from components import *
-from state import Physical
+from src.state import Physical
 
 class Beans(GameObject):
     def __init__(self, game_instance):

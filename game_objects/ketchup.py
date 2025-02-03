@@ -1,7 +1,7 @@
 from game_objects import *
 from components import *
-from state import Physical
-from printing import *
+from src.state import Physical
+from src.printing import *
 
 class Ketchup(GameObject):
     def __init__(self, game_instance):

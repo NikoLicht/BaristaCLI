@@ -1,8 +1,8 @@
 from components import *
-from printing import *
+from src.printing import *
 import random
-from grammar import Grammar
-from state import Physical
+from src.grammar import Grammar
+from src.state import Physical
 
 class Slapable(Component):
     def __init__(self, flavour_text):

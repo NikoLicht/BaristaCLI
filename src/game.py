@@ -1,7 +1,7 @@
 from game_objects import *
-from CLI import CLI
-from printing import *
-from grammar import Grammar
+from .CLI import CLI
+from .printing import *
+from .grammar import Grammar
 from typing import Type, List, Dict, TYPE_CHECKING
 
 if TYPE_CHECKING:

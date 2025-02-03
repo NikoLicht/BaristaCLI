@@ -1,8 +1,8 @@
 from components import *
-from grammar import Grammar
+from src.grammar import Grammar
 from game_objects import *
-from printing import *
-from state import Physical, Verbs
+from src.printing import *
+from src.state import Physical, Verbs
 
 class Grinder(GameObject):
 

@@ -1,4 +1,4 @@
-from printing import *
+from .printing import *
 class Grammar():
     def __init__(self):
         pass

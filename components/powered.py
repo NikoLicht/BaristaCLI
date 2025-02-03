@@ -1,5 +1,5 @@
 from .component import Component
-from printing import *
+from src.printing import *
 
 class Powered(Component):
     def __init__(self, when_turn_on = None):

@@ -1,6 +1,6 @@
 from game_objects import *
 from components import *
-from state import Physical
+from src.state import Physical
 from typing import List
 
 class Puck(GameObject):

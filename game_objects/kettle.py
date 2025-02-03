@@ -1,8 +1,8 @@
 from game_objects import *
 from components import *
-from printing import *
-from grammar import Grammar
-from state import Physical
+from src.printing import *
+from src.grammar import Grammar
+from src.state import Physical
 
 class Kettle(GameObject):
     def __init__(self, game):

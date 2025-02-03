@@ -1,9 +1,9 @@
 from .game_object import GameObject
 from components import *
 from typing import TypeVar, List
-from printing import *
-from state import Physical
-from grammar import Grammar
+from src.printing import *
+from src.state import Physical
+from src.grammar import Grammar
 T = TypeVar("T", bound=GameObject)
 
 class Mixture(GameObject):

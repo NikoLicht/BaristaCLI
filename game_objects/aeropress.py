@@ -1,9 +1,9 @@
 from .game_object import *
 from components import *
-from grammar import Grammar
+from src.grammar import Grammar
 from typing import List, Dict
-from printing import *
-from state import Physical
+from src.printing import *
+from src.state import Physical
 
 class AeroPress(GameObject):
     def __init__(self, game_instance):

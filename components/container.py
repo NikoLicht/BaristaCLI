@@ -1,7 +1,7 @@
 from .component import Component
-from grammar import Grammar
+from src.grammar import Grammar
 from typing import TYPE_CHECKING, List
-from printing import *
+from src.printing import *
 if TYPE_CHECKING:
     from game_objects import *
 

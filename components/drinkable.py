@@ -1,5 +1,5 @@
 from .component import Component
-from printing import *
+from src.printing import *
 
 class Drinkable(Component):
     def __init__(self, taste):

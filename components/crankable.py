@@ -1,4 +1,4 @@
-from printing import *
+from src.printing import *
 from .component import Component
 
 class Crankable(Component):

@@ -1,7 +1,7 @@
 from game_objects import *
 from components import *
-from printing import *
-from state import Physical
+from src.printing import *
+from src.state import Physical
 
 
 class Fridge(GameObject):
@@ -16,7 +16,7 @@ class Fridge(GameObject):
         self.property = Physical.SOLID
 
     def open(self):
-        say(f"You {action("open")} the {thing("fridge")} door. As usual, the hinges makes that little squeek when the door is almost open.")
+        say(f"You {action("open")} the {thing("fridge")} door. As usual, the hinges make that little squeek when the door is almost open.")
         
         #handle watch the open fridge
         self.watch.flavour_text = "You look inside the fridge and realize that you have a few things in there as well."

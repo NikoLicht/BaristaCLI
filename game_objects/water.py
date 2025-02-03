@@ -1,7 +1,7 @@
 from .game_object import GameObject
 from components import *
-from printing import *
-from state import Physical, Verbs
+from src.printing import *
+from src.state import Physical, Verbs
 
 class Water(GameObject):
     def __init__(self, game_instance):

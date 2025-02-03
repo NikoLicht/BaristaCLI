@@ -1,6 +1,6 @@
 from components import *
-from printing import *
-from grammar import Grammar
+from src.printing import *
+from src.grammar import Grammar
 
 class Edible(Component):
     def __init__(self, taste):

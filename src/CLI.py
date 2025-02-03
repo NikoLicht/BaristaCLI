@@ -1,7 +1,7 @@
 import os
 from typing import TYPE_CHECKING
-from grammar import Grammar
-from printing import *
+from .grammar import Grammar
+from .printing import *
 from sys import exit
 from rich.console import Console
 

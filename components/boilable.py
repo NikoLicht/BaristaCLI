@@ -1,6 +1,6 @@
 from .component import Component
 from .container import Container
-from printing import *
+from src.printing import *
 
 class Boilable(Component):
     """A component that makes an object boilable."""
