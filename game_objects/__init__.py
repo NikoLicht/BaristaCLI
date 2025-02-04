@@ -9,8 +9,12 @@ from .kettle import Kettle
 from .ketchup import Ketchup
 from .puck import Puck
 from .fridge import Fridge
+from .cup import Cup
+from .tea import Tea
+from .onion import Onion
+from .tears import Tears
 
 # Define the public API of the package
-__all__ = ["GameObject", "AeroPress", "Water", "Beans", "Grinder", "Mixture", "Kettle", "Ketchup", "Puck", "Fridge"]
+__all__ = ["GameObject", "AeroPress", "Water", "Beans", "Grinder", "Mixture", "Kettle", "Ketchup", "Puck", "Fridge", "Cup", "Tea", "Onion", "Tears"]
 
 
