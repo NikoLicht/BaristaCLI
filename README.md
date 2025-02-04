@@ -5,34 +5,48 @@ BaristaCLI includes a few differnt objects that each impement some different act
 
 ![baristaCLI](https://github.com/user-attachments/assets/bab1f9bc-d1d2-4d37-87fc-4e2674fd02b4)
 
+---
 
-# Running BaristaCLI?
+## 🚀 Running BaristaCLI
+Choose one of the following methods to run the game:
 
-**You can run the (probably) outdated .exe** file in the executables folder
+### 1️⃣ Run the Executable
+Simply run the **.exe file** located in the [Executables folder](https://github.com/NikoLicht/BaristaCLI/tree/main/Executables).
 
-For the lazy: [BaristaCLI.exe](https://github.com/NikoLicht/BaristaCLI/blob/main/Executables/BaristaCLI_v_01.exe)
-
-**Get your hands dirty** by running it with python
+### 2️⃣ Run with Python
+If you prefer running the game via Python, follow these steps:
 ```sh
+# Clone the repository
 git clone https://github.com/NikoLicht/BaristaCLI.git
 cd BaristaCLI
+
+# Set up a virtual environment
 python -m venv venv
-Windows: venv\scripts\activate OR Mac / Linux: source venv/bin/activate
+
+# Activate the virtual environment
+# Windows:
+venv\scripts\activate
+# Mac / Linux:
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the game
 python barista.py
 
-deactivate (to exit your virtual evnironment)
+# Exit the virtual environment
+deactivate
 ```
-
-Or alternatively **build it yourself**. I've added a build.ps1 script for building in PowerShell. Then you should get an executable that works on your system. Enjoy.
+### 3️⃣ Build it yourself
+For those who want to build the project manually, a build.ps1 script is provided.
 ```sh
+# Clone the repository
 git clone https://github.com/NikoLicht/BaristaCLI.git
 cd BaristaCLI
+
+# Run the build script
 ./build.ps1
 ```
 
-# Prerequisites for building
-1. Git, Python
-2. Build tool / terminal
-    * Windows: Enable PowerShell execution.
-    * Linux / Mac: The same, but maybe use pwsh instead of PowerShell? I think maybe there is PowerShell available for Linux/Mac.
+_Enjoy brewing your virtual coffee adventure with BaristaCLI! ☕_
