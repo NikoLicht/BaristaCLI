@@ -3,13 +3,15 @@ from src.printing import *
 import random
 from src.grammar import Grammar
 from src.state import Physical
+from collections.abc import Callable
 
 class Slapable(Component):
-    def __init__(self, flavour_text):
+    def __init__(self, flavour_text, on_slap: callable = None ):
         super().__init__()
         self.add_method(["slap"], self.slap)
         self.slap_sounds = ["Whack!", "SLAP!", "Smack!"]
         self.flavour_text = flavour_text
+        self.on_slap = on_slap
     
     def slap(self):
 
@@ -27,6 +29,10 @@ class Slapable(Component):
                 for obj in container.contains:
                     obj.position = None
                 container.contains = []
+
+        if self.on_slap is not None:
+            self.on_slap()
+
                 
                     
 
