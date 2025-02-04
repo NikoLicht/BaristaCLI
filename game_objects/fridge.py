@@ -2,13 +2,14 @@ from game_objects import *
 from components import *
 from src.printing import *
 from src.state import Physical
+from src.action_object import ActionObject  
 
 
 class Fridge(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "fridge"
-        self.register_callable_method("open", self.open)
+        self.register_callable_method(ActionObject("open", None), self.open)
         self.watch: Watchable = self.AddComponent(Watchable("You wonder what mysteries it contains. You also wonder about the humming sound it makes."))
         self.has_watched = False
         self.container: Container = self.AddComponent(Container())

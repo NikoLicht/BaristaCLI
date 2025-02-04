@@ -2,11 +2,12 @@ from components import *
 from src.printing import *
 from src.grammar import Grammar
 from collections.abc import Callable
+from src.action_object import ActionObject
 
 class Edible(Component):
     def __init__(self, taste = None, on_eat: Callable = None):
         super().__init__()
-        self.add_method(["eat"], self.eat)
+        self.add_method(ActionObject("eat", None), self.eat)
         self.taste = taste
         self.on_eat = on_eat
 
@@ -29,4 +30,3 @@ class Edible(Component):
             self.on_eat()
 
 
-    

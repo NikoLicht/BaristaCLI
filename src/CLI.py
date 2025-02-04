@@ -36,6 +36,70 @@ class CLI():
         else:
             warn("Sorry, but I don't quite understand.")
 
+    def pre_parse_input(self, input: str):
+        #find action
+        #find out if input contains list
+        #check if action supports list_input
+        #if not, return error
+        #check if action has required_parameter and if the parameter is in the input
+        #if yes, find all inputs in list (will be all words seperated by "," and "and")
+            #if there is a requried_parameter in the action, the input list will end at that point
+        #Then comes the part im unsure about, I have to check if the target of the required_paramter supports the required_action
+        #then, in another function, probably execute the action on the list of targets, taking into account the required paramter
+
+        #example: put water, beans, grinder into kettle
+        #action: put
+        #required_parameter: into
+        #list_input: True
+        #list: water, beans, grinder
+        #target: kettle
+
+        #should probably return an object with all the information, so that the next function can use it
+
+        words = [x for x in input.split() if x != "and"]
+        action = words[0]
+        if action not in self.game_instance.registered_actions:
+            warn("Action not recognized.")
+            return None
+        
+        action_obj = self.game_instance.registered_actions[action]
+        target = None
+        required_parameter = None
+        if action_obj.required_parameter is not None:
+            target = words[-1]
+            required_parameter = words[-2]
+            if required_parameter != action_obj.required_parameter: 
+                warn(f"Action {action} requires {action_obj.required_parameter} as a parameter.")
+                return None
+            if target not in self.game_instance.objects:
+                warn(f"Target {target} not recognized.")
+                return None
+
+            target = self.game_instance.objects[target]            
+
+        #Take input between action and required_parameter if there is a required_parameter, else take all input after action
+        input_objects = []
+        if required_parameter:
+            input_objects = words[1:-2]
+        else:
+            input_objects = words[1:]
+
+        if action_obj.allows_list is False and len(input_objects) > 1:
+            warn(f"Action {action} does not support multiple objects.")
+            return None
+        
+        return {
+            "action" : action,
+            "input_objects" : input_objects,
+            "required_parameter" : required_parameter,
+            "target" : target,
+        }
+
+
+
+        
+
+
     def parse_single_command(self, command):
         grammar = Grammar()
         match command:
@@ -68,6 +132,10 @@ class CLI():
                     f"{action("status")} {thing("object")} - to see the current state of the object.",
                     f"{action("actions")} {thing("object")} - to see what special actions you can do on that object."
                     )
+                
+            case "actions-all":
+                for key, action_obj in self.game_instance.registered_actions.items():
+                    say(f"{key} - {str(action_obj)}")
 
             case _:
                 warn("I don't recognize that command. Contact the developer, if you feel in your heart that it should be added.")
@@ -90,5 +158,6 @@ class CLI():
 
         while True:
             command = self.styled_input(barista("barista >  "))
+            print(self.pre_parse_input(command))
             self.parse(command)
 

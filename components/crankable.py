@@ -1,11 +1,12 @@
 from src.printing import *
 from .component import Component
 from src.state import Physical
+from src.action_object import ActionObject
 
 class Crankable(Component):
     def __init__(self, crank_linked_func):
         super().__init__()
-        self.add_method(["crank"], self.crank)
+        self.add_method(ActionObject("crank", None), self.crank)
         self.crank_linked_func = crank_linked_func
 
     def crank(self):

@@ -4,8 +4,9 @@ from typing import TYPE_CHECKING, Dict
 from src.printing import *
 from src.state import Physical, Verbs
 from collections.abc import Callable
+from src.action_object import ActionObject
 if TYPE_CHECKING:
-    from game import Game
+    from src.game import Game
 
 class GameObject:
     def __init__(self, game_instance):
@@ -14,8 +15,9 @@ class GameObject:
         self._state_list = []
         self.name = ""
         self.game_instance: Game = game_instance
-        self.register_callable_method("status", self.status)
-        self.register_callable_method("actions", self.list_actions)
+        self.register_callable_method(ActionObject("status", None, False), self.status)
+        self.register_callable_method(ActionObject("actions", None, False), self.list_actions)
+        self.register_callable_method(ActionObject("put", "into", True), self.change_property)
         self.position: GameObject = None
         self.flavour_impact = None
         self.property: Physical = Physical.SOLID
@@ -73,8 +75,9 @@ class GameObject:
     def has_state(self, state):
         return state in self._state_list
 
-    def register_callable_method(self, method_name, method):
-        self._callable_methods[method_name] = method
+    def register_callable_method(self, action_object: ActionObject, method: Callable ):
+        self._callable_methods[action_object.name] = method
+        self.game_instance.register_action(action_object)
 
     def change_property(self, property: Physical) -> None:
         if self.property != property:
@@ -94,3 +97,6 @@ class GameObject:
 
         # If the method is not found
         warn(f"You cannot {action(method_name)} the {thing(self.name)}")
+
+    def __str__(self):
+        return self.name

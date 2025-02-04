@@ -3,6 +3,7 @@ from game_objects import *
 from src.printing import *
 from src.state import Physical
 from src.grammar import Grammar
+from src.action_object import ActionObject
 
 
 class Cup(GameObject):
@@ -16,7 +17,7 @@ class Cup(GameObject):
         self.AddComponent(Watchable(f"One of your favourite cups. You really love this {thing(self.name)}, that your grandmother gave you."))
         self.AddComponent(Slapable("[italic]Why did I just do that[/ italic]- you think.", self.break_cup))
         self.container: Container = self.AddComponent(Container())
-        self.register_callable_method("swirl", self.swirl)
+        self.register_callable_method(ActionObject("swirl", None), self.swirl)
 
     def break_cup(self):
         say(f"The {thing(self.name)} breaks into 43 porcelain pieces which now lie on your floor. Watch your step.")

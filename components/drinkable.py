@@ -1,11 +1,12 @@
 from .component import Component
 from src.printing import *
 from src.grammar import Grammar
+from src.action_object import ActionObject
 
 class Drinkable(Component):
     def __init__(self, flavour_text = None):
         super().__init__()
-        self.add_method(["drink"], self.drink)
+        self.add_method(ActionObject("drink", None), self.drink)
         self.flavour_text = flavour_text
 
     def drink(self):

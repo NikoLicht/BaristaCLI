@@ -3,12 +3,14 @@ from .CLI import CLI
 from .printing import *
 from .grammar import Grammar
 from typing import Type, List, Dict, TYPE_CHECKING
+from .action_object import ActionObject
 
 if TYPE_CHECKING:
     from components import *
 
 class Game:
     def __init__(self):
+        self.registered_actions: Dict[str, ActionObject] = {}
 
         self.CLI = CLI()
         self.CLI.set_game(self)
@@ -25,6 +27,10 @@ class Game:
             "cup": Cup(self),
             "tea": Tea(self)
         }
+
+    def register_action(self, action: ActionObject):
+        if action.name not in self.registered_actions:
+            self.registered_actions[action.name.lower()] = action
 
     def perform_action_simple(self, try_action, object):
         if object in self.objects:

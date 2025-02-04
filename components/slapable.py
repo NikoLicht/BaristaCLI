@@ -4,11 +4,12 @@ import random
 from src.grammar import Grammar
 from src.state import Physical
 from collections.abc import Callable
+from src.action_object import ActionObject
 
 class Slapable(Component):
     def __init__(self, flavour_text, on_slap: callable = None ):
         super().__init__()
-        self.add_method(["slap"], self.slap)
+        self.add_method(ActionObject("slap", None), self.slap)
         self.slap_sounds = ["Whack!", "SLAP!", "Smack!"]
         self.flavour_text = flavour_text
         self.on_slap = on_slap

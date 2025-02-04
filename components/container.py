@@ -2,6 +2,7 @@ from .component import Component
 from src.grammar import Grammar
 from typing import TYPE_CHECKING, List
 from src.printing import *
+from src.action_object import ActionObject
 if TYPE_CHECKING:
     from game_objects import *
 
@@ -10,8 +11,7 @@ class Container(Component):
     def __init__(self):
         super().__init__()
         self.contains: List[GameObject] = []
-        self.add_method(["put"], self.fill)
-        self.add_method(["empty"], self.empty)
+        self.add_method(ActionObject("empty", None), self.empty)
 
     def fill(self, content, triggered_action = False):
         self.contains.append(content)

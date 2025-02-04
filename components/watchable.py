@@ -1,10 +1,11 @@
 from .component import Component
 from src.printing import *
+from src.action_object import ActionObject
 
 class Watchable(Component):
     def __init__(self, flavour_text, on_watch: callable = None):
         super().__init__()
-        self.add_method(["watch"], self.watch)
+        self.add_method(ActionObject("watch", None, True), self.watch)
         self.flavour_text = flavour_text
         self.on_watch = on_watch
 

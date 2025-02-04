@@ -1,10 +1,11 @@
 from .component import Component
 from src.printing import *
+from src.action_object import ActionObject
 
 class Powered(Component):
     def __init__(self, when_turn_on = None):
         super().__init__()
-        self.add_method(["turn-on"], self.turn_on)
+        self.add_method(ActionObject("turn-on", None), self.turn_on)
         self.when_turn_on: function = when_turn_on
 
     def turn_on(self):

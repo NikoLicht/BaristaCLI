@@ -1,12 +1,13 @@
 from .component import Component
 from .container import Container
 from src.printing import *
+from src.action_object import ActionObject
 
 class Boilable(Component):
     """A component that makes an object boilable."""
     def __init__(self):
         super().__init__()
-        self.add_method(["boil"], self.boil)
+        self.add_method(ActionObject("boil", None), self.boil)
 
     def boil(self, triggered_action = False):
         if not triggered_action:
