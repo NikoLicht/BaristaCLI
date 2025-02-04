@@ -182,4 +182,3 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-components/__pycache__/__init__.cpython-313.pyc
