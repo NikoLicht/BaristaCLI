@@ -69,4 +69,7 @@ $version | Out-File $versionFile
 # Cleanup build folder
 Remove-Item -Recurse -Force $BUILD_DIR
 
-Write-Host "✅ Build complete! Executable saved to $EXECUTABLES_DIR\$exeName"
+Write-Host "Build complete! Executable saved to $EXECUTABLES_DIR\$exeName"
+
+deactivate
+
