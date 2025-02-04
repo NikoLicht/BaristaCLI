@@ -21,7 +21,9 @@ class Game:
             "beans" : Beans(self),
             "grinder" : Grinder(self),
             "kettle" : Kettle(self),
-            "fridge" : Fridge(self)
+            "fridge" : Fridge(self),
+            "cup": Cup(self),
+            "tea": Tea(self)
         }
 
     def perform_action_simple(self, try_action, object):
