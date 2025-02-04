@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 from .grammar import Grammar
 from .printing import *
 from sys import exit
@@ -57,6 +57,7 @@ class CLI():
         #should probably return an object with all the information, so that the next function can use it
 
         words = [x for x in input.split() if x != "and"]
+        self.help_check(words)
         action = words[0]
         if action not in self.game_instance.registered_actions:
             warn("Action not recognized.")
@@ -96,6 +97,13 @@ class CLI():
         }
 
 
+    def help_check(self, input: List[str]):
+        if len(input) == 2:
+            if "help" in input:
+                key = [x for x in input if x != "help"][0]
+                if key in self.game_instance.registered_actions:
+                    self.game_instance.registered_actions[key].help()
+                
 
         
 
