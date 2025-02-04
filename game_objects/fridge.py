@@ -26,9 +26,16 @@ class Fridge(GameObject):
     def on_watch(self):
         if not self.has_watched:
             self.has_watched = True
+
+            from game_objects import Ketchup
             ketchup = self.game_instance.create_new_game_object("ketchup", Ketchup)
             ketchup.position = self
             self.container.contains.append(ketchup)
+
+            from game_objects import Onion
+            onion = self.game_instance.create_new_game_object("onion", Onion)
+            onion.position = self
+            self.container.contains.append(onion)
 
 
      
