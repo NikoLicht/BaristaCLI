@@ -32,22 +32,11 @@ class Game:
         if action.name not in self.registered_actions:
             self.registered_actions[action.name.lower()] = action
 
-    def perform_action_simple(self, try_action, object):
-        if object in self.objects:
-            self.objects[object].try_call_method(try_action)
-        else:
-            warn(f"There is no object called {object} - use {action("objects")} to see which {thing("objects")} you can interact with.")
+    def perform_action_simple(self, try_action, object: GameObject):
+        object.try_call_method(try_action)
     
-    def perform_action_complex(self, try_action, object, second_object : GameObject):
-        if object not in self.objects:
-            warn(f"There is no object called {object} - use {action("objects")} to see which {thing("objects")} you can interact with.")
-            return
-
-        if second_object not in self.objects:
-            warn(f"There is no object called {second_object} - use {action("objects")} to see which {thing("objects")} you can interact with.")
-            return
-
-        self.objects[second_object].try_call_method(try_action, self.objects[object])
+    def perform_action_complex(self, try_action, object, target : GameObject):
+        object.try_call_method(try_action, target)
 
     def destroy_game_object(self, objects_to_destroy: List[GameObject]):
         warn(f"You won't have access to {self.grammar.make_list(objects_to_destroy, 'or')} anymore.")

@@ -1,4 +1,5 @@
 from components.component import Component
+from components.container import Container
 from src.grammar import Grammar
 from typing import TYPE_CHECKING, Dict
 from src.printing import *
@@ -12,12 +13,13 @@ class GameObject:
     def __init__(self, game_instance):
         self._components: Dict[str, Component]= {}
         self._callable_methods: Dict[str, function]= {}
+        self.required_words = []
         self._state_list = []
         self.name = ""
         self.game_instance: Game = game_instance
         self.register_callable_method(ActionObject("status", None, False), self.status)
         self.register_callable_method(ActionObject("actions", None, False), self.list_actions)
-        self.register_callable_method(ActionObject("put", "into", True), self.change_property)
+        self.register_callable_method(ActionObject("put", "into", True), self.put)
         self.position: GameObject = None
         self.flavour_impact = None
         self.property: Physical = Physical.SOLID
@@ -58,6 +60,13 @@ class GameObject:
         grammar = Grammar()
         say(f"{thing(self.name)} has these actions: {grammar.make_list(action_list, style=action)} - but you can always use {action("actions")} and {action("status")}")
 
+    def put(self, into):
+        container: Container = into.get_component("container")
+        if container:
+            container.fill(self)
+        else:
+            warn(f"You cannot {action('put')} {thing(self.name)} into {thing(into.name)}")
+
     def AddComponent(self, component: Component) -> Component:
         component.attach_to(self)
         self._components[component.key()] = component
@@ -78,6 +87,10 @@ class GameObject:
     def register_callable_method(self, action_object: ActionObject, method: Callable ):
         self._callable_methods[action_object.name] = method
         self.game_instance.register_action(action_object)
+    
+    def register_required_word(self, word: str):
+        if word not in self.required_words:
+            self.required_words.append(word)
 
     def change_property(self, property: Physical) -> None:
         if self.property != property:
@@ -97,6 +110,10 @@ class GameObject:
 
         # If the method is not found
         warn(f"You cannot {action(method_name)} the {thing(self.name)}")
+
+    def supports_required_word(self, word) -> bool:
+        return word in self.required_words
+        
 
     def __str__(self):
         return self.name

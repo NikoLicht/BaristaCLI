@@ -6,7 +6,7 @@ class Grammar():
     def make_list(self, input, seperator = "and", style = thing) -> str:
         
         if not isinstance(input, list):
-            print("input is not a list!")
+            print("input is not a list! Tell the dev!")
 
         if all(hasattr(item, 'name') for item in input):
             input = [item.name for item in input]

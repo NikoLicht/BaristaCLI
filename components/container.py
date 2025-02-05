@@ -12,6 +12,7 @@ class Container(Component):
         super().__init__()
         self.contains: List[GameObject] = []
         self.add_method(ActionObject("empty", None), self.empty)
+        self.register_required_word("into")
 
     def fill(self, content, triggered_action = False):
         self.contains.append(content)

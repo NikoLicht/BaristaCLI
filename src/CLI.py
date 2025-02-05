@@ -1,5 +1,7 @@
 import os
 from typing import TYPE_CHECKING, List
+
+from .command import Command
 from .grammar import Grammar
 from .printing import *
 from sys import exit
@@ -9,111 +11,124 @@ import time
 if TYPE_CHECKING:
     from game import Game
 
+
+
 class CLI():
     def __init__(self):
         self.game_instance : "Game" = None
+        self.single_word_actions = ["exit", "quit", "help", "objects", "actions", "actions-all"]
 
     def set_game(self, set_game):
         self.game_instance = set_game
 
-    def parse(self, sentence):
-        seperate_words = sentence.split()
+    def execute_command(self, command: Command):
+        #print(str(command))
 
-        if len(seperate_words) == 1:
-            self.parse_single_command(seperate_words[0])
+        if command is None:
             return
+        
+        if command.is_single_command():
 
-        if len(seperate_words) == 2:
-            first_object = seperate_words[1]
-            action = seperate_words[0]
-            self.game_instance.perform_action_simple(action, first_object)
+            if command.action in self.single_word_actions:
 
-        elif seperate_words[2] in ["into", "in"]:
-            action = seperate_words[0]
-            first_object = seperate_words[1]
-            second_object = seperate_words[3]
-            self.game_instance.perform_action_complex(action, first_object, second_object)
-        else:
-            warn("Sorry, but I don't quite understand.")
+                self.execute_single_command(command.action)
+                return
+        
+            if command.action in self.game_instance.objects:
+                self.game_instance.objects[command.action].try_call_method("status")
+                return
+            
+        for obj in command.input_objects:
+            if command.required_parameter is not None:
+                #print(f"Performing complex action {command.action} on {obj.name} and {command.target.name}")
+                self.game_instance.perform_action_complex(command.action, obj, command.target)
+            else:
+                #print(f"Performing simple action {command.action} on {obj.name}")
+                self.game_instance.perform_action_simple(command.action, obj)
 
-    def pre_parse_input(self, input: str):
-        #find action
-        #find out if input contains list
-        #check if action supports list_input
-        #if not, return error
-        #check if action has required_parameter and if the parameter is in the input
-        #if yes, find all inputs in list (will be all words seperated by "," and "and")
-            #if there is a requried_parameter in the action, the input list will end at that point
-        #Then comes the part im unsure about, I have to check if the target of the required_paramter supports the required_action
-        #then, in another function, probably execute the action on the list of targets, taking into account the required paramter
-
-        #example: put water, beans, grinder into kettle
-        #action: put
-        #required_parameter: into
-        #list_input: True
-        #list: water, beans, grinder
-        #target: kettle
-
-        #should probably return an object with all the information, so that the next function can use it
-
+    def parse_command(self, input: str) -> Command:
+        command: Command = Command()
         words = [x for x in input.split() if x != "and"]
-        self.help_check(words)
-        action = words[0]
-        if action not in self.game_instance.registered_actions:
-            warn("Action not recognized.")
+        if len(words) == 1:
+            if words[0] in self.single_word_actions:
+                command.action = words[0]
+                return command
+            if words[0] in self.game_instance.objects:
+                command.action = words[0]
+                return command
+            else:
+                warn(f"I don't know that action - see {action('actions')} for a list of actions.")
+                return None
+        if self.help_check(words):
+            return None
+
+        command.action = words[0]
+        if command.action not in self.game_instance.registered_actions and command.action not in self.single_word_actions and command.action not in self.game_instance.objects:
+            warn(f"I don't know that action yet - see {action('actions')} for a list of actions.")
             return None
         
-        action_obj = self.game_instance.registered_actions[action]
-        target = None
-        required_parameter = None
+        if command.action not in self.game_instance.registered_actions:
+            warn(f"I don't know that action yet - see {action('actions')} for a list of actions.")
+            return None
+        action_obj = self.game_instance.registered_actions[command.action]
         if action_obj.required_parameter is not None:
-            target = words[-1]
-            required_parameter = words[-2]
-            if required_parameter != action_obj.required_parameter: 
-                warn(f"Action {action} requires {action_obj.required_parameter} as a parameter.")
+            target_key = words[-1]
+            command.required_parameter = words[-2]
+            if command.required_parameter != action_obj.required_parameter: 
+                warn(f"{action(command.action)} requires that you use {action_obj.required_parameter} - see {action('help')} {thing(command.action)} for usage.")
                 return None
-            if target not in self.game_instance.objects:
-                warn(f"Target {target} not recognized.")
+            if target_key not in self.game_instance.objects:
+                warn(f"I don't know of any object {thing(target_key)} - see {action('objects')} for a list of objects.")
                 return None
 
-            target = self.game_instance.objects[target]            
+            command.target = self.game_instance.objects[target_key]            
 
         #Take input between action and required_parameter if there is a required_parameter, else take all input after action
-        input_objects = []
-        if required_parameter:
-            input_objects = words[1:-2]
+        object_keys = []
+        if command.required_parameter:
+            object_keys = words[1:-2]
         else:
-            input_objects = words[1:]
+            object_keys = words[1:]
 
-        if action_obj.allows_list is False and len(input_objects) > 1:
-            warn(f"Action {action} does not support multiple objects.")
+
+        command.input_objects = []
+        for key in object_keys:
+            if key not in self.game_instance.objects:
+                warn(f"I don't know of any object [italic]key[/italic] - see {action('objects')} for a list of objects.")
+                return None
+            command.input_objects.append(self.game_instance.objects[key])
+
+
+        if action_obj.allows_list is False and len(command.input_objects) > 1:
+            warn(f"{action(command.action)} does not list input - see {action('help')} {thing(command.action)} for usage.")
             return None
         
-        return {
-            "action" : action,
-            "input_objects" : input_objects,
-            "required_parameter" : required_parameter,
-            "target" : target,
-        }
+        if command.required_parameter is not None and target_key is not None:
+            if command.target.supports_required_word(command.required_parameter) is False:
+                warn(f"{thing(target_key.name)} does not support {command.required_parameter} -  see {action('help')} {thing(command.action)} for usage.")
+                return None
+        
+        return command
 
-
-    def help_check(self, input: List[str]):
+    def help_check(self, input: List[str]) -> bool:
         if len(input) == 2:
             if "help" in input:
                 key = [x for x in input if x != "help"][0]
                 if key in self.game_instance.registered_actions:
                     self.game_instance.registered_actions[key].help()
+                    return True
+                if key in self.game_instance.objects:
+                    self.game_instance.objects[key].try_call_method("actions")
+                    return True
+        return False
+
                 
-
-        
-
-
-    def parse_single_command(self, command):
+    def execute_single_command(self, command):
         grammar = Grammar()
         match command:
             case "exit" | "quit":
-                say("Bye! See you tomorrow!")
-                time.sleep(4)
+                say(f"{barista("Bye! See you tomorrow!")}")
+                time.sleep(3)
                 exit(0)
 
             case "help":
@@ -166,6 +181,6 @@ class CLI():
 
         while True:
             command = self.styled_input(barista("barista >  "))
-            print(self.pre_parse_input(command))
-            self.parse(command)
+            parsed_command = self.parse_command(command)
+            self.execute_command(parsed_command)
 

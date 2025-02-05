@@ -15,18 +15,18 @@ class ActionObject:
         return f"{self.name} - {self.required_parameter} - {self.allows_list}"
     
     def help(self):
-        say(f"Action: {action(self.name)}")
-        req_param_ending = "." if self.required_parameter is None else f" [italic]{self.required_parameter}[/ italic] a target {thing("object")}"
+        say(f"   [u]{action(self.name)} help             [/u]")
+        req_param_ending = "." if self.required_parameter is None else f" [italic]{req(self.required_parameter)}[/ italic] a target {thing("object")}"
         say(f"   With this action, you can {action(self.name)} a single object{"." if not self.allows_list else f" or multiple objects{req_param_ending}"}")
         if(self.required_parameter is not None):
             say(f"   The action requires a {self.required_parameter} as a parameter.")
         if self.allows_list:
             if self.required_parameter is not None:
-                say(f"   Example: {action(self.name)} {thing('water')}, {thing('beans')} and {thing('cup')} {self.required_parameter} {thing('grinder')}")
+                say(f"   Example: {action(self.name)} {thing('water')}, {thing('beans')} and {thing('cup')} {req(self.required_parameter)} {thing('grinder')}")
             else:
                 say(f"   Example: {action(self.name)} {thing('water')}, {thing('beans')} and {thing('cup')}")
         else:
             if self.required_parameter is not None:
-                say(f"   Example: {action(self.name)} {thing('water')} {self.required_parameter} {thing('grinder')}")
+                say(f"   Example: {action(self.name)} {thing('water')} {req(self.required_parameter)} {thing('grinder')}")
             else:
                 say(f"   Example: {action(self.name)} {thing('water')}")

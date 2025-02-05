@@ -6,7 +6,8 @@ styles = {
     "thing": "bold light_goldenrod3",
     "action": "bold rosy_brown",
     "warn": "italic deep_pink4",
-    "barista": "bold wheat4"
+    "barista": "bold wheat4",
+    "required": "bold plum_4",
 }
 
 def say(*messages):
@@ -36,5 +37,8 @@ def warn(warn, full_sentence = True) -> str:
 def barista(barista = "barista") -> str:
     return wrap_style(barista, "barista")
 
+def req(required) -> str:
+    return wrap_style(required, "required")
 
-__all__ = ["say", "thing", "action", "warn", "barista", "styles"]
+
+__all__ = ["say", "thing", "action", "warn", "barista", "styles", "req"]
