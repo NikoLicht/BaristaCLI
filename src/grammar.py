@@ -14,7 +14,6 @@ class Grammar():
         if not all(isinstance(item, str) for item in input):
             raise ValueError("Input must be a list of strings or objects with a 'name' attribute.")
         
-            
         input = [style(obj) for obj in input]
         input = list(set(input))
 

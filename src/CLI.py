@@ -48,6 +48,7 @@ class CLI():
 
     def parse_command(self, input: str) -> Command:
         command: Command = Command()
+        input = input.replace(",", "")
         words = [x for x in input.split() if x != "and"]
         if len(words) == 1:
             if words[0] in self.single_word_actions:
@@ -94,7 +95,7 @@ class CLI():
         command.input_objects = []
         for key in object_keys:
             if key not in self.game_instance.objects:
-                warn(f"I don't know of any object [italic]key[/italic] - see {action('objects')} for a list of objects.")
+                warn(f"I don't know of any object [italic]{key}[/italic] - see {action('objects')} for a list of objects.")
                 return None
             command.input_objects.append(self.game_instance.objects[key])
 
@@ -105,7 +106,7 @@ class CLI():
         
         if command.required_parameter is not None and target_key is not None:
             if command.target.supports_required_word(command.required_parameter) is False:
-                warn(f"{thing(target_key.name)} does not support {command.required_parameter} -  see {action('help')} {thing(command.action)} for usage.")
+                warn(f"{thing(target_key)} does not support {req(command.required_parameter)} -  see {action('help')} {thing(command.action)} for usage.")
                 return None
         
         return command

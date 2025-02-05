@@ -56,9 +56,15 @@ class GameObject:
 
 
     def list_actions(self):
-        action_list = [x for x in self._callable_methods.keys() if x not in ["actions", "status"]]
+        general_actions = ["status", "actions", "put"]
+        action_list = [x for x in self._callable_methods.keys() if x not in general_actions]
         grammar = Grammar()
-        say(f"{thing(self.name)} has these actions: {grammar.make_list(action_list, style=action)} - but you can always use {action("actions")} and {action("status")}")
+        say(f"   [u]{thing(self.name)} action overview                         [/u]")
+        say(f"   General actions: {grammar.make_list(general_actions, style=action)}")
+        say(f"    Unique actions: {grammar.make_list(action_list, style=action)}")
+
+        if self.required_words is not None and len(self.required_words) > 0:
+            say(f"          Supports: {grammar.make_list(self.required_words, style=req)}")
 
     def put(self, into):
         container: Container = into.get_component("container")

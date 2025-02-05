@@ -7,7 +7,7 @@ styles = {
     "action": "bold rosy_brown",
     "warn": "italic deep_pink4",
     "barista": "bold wheat4",
-    "required": "bold plum_4",
+    "required": "italic medium_purple4"
 }
 
 def say(*messages):
