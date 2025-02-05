@@ -1,4 +1,4 @@
-# BaristaCLI
+# ☕BaristaCLI 
 A little quirky terminal coffee adventure game. In this game you use actions on objects in order to achieve that delicious virtual brew. Have fun and play around.
 
 BaristaCLI includes a few differnt objects that each impement some different actions. Watch out for the grinder that thing is a beast. Make sure to check out the fridge as well.
@@ -7,13 +7,13 @@ BaristaCLI includes a few differnt objects that each impement some different act
 
 ---
 
-## 🚀 Running BaristaCLI
+## Running BaristaCLI
 Choose one of the following methods to run the game:
 
-### 1️⃣ Run the Executable
-Simply run the **.exe file** located in the [Executables folder](https://github.com/NikoLicht/BaristaCLI/tree/main/Executables).
+### Option #1: Run the Executable
+Simply run the latest **.exe file** located in the [Executables folder](https://github.com/NikoLicht/BaristaCLI/tree/main/Executables).
 
-### 2️⃣ Run with Python
+### Option #2: Run with Python
 If you prefer running the game via Python, follow these steps:
 ```sh
 # Clone the repository
@@ -38,7 +38,7 @@ python barista.py
 # Exit the virtual environment
 deactivate
 ```
-### 3️⃣ Build it yourself
+### Option #3: Build it yourself
 For those who want to build the project manually, a build.ps1 script is provided.
 ```sh
 # Clone the repository
