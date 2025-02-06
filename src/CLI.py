@@ -159,7 +159,8 @@ class CLI():
                 
             case "actions-all":
                 for key, action_obj in self.game_instance.registered_actions.items():
-                    say(f"{key} - {str(action_obj)}")
+                    say(f"[u]{action(key)} action object                                         [/u]")
+                    say(str(action_obj))
 
             case _:
                 warn("I don't recognize that command. Contact the developer, if you feel in your heart that it should be added.")

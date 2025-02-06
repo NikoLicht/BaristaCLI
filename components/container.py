@@ -11,7 +11,7 @@ class Container(Component):
     def __init__(self):
         super().__init__()
         self.contains: List[GameObject] = []
-        self.add_method(ActionObject("empty", None), self.empty)
+        self.add_method(ActionObject("empty", None, methods=[self.empty]))
         self.register_required_word("into")
 
     def fill(self, content, triggered_action = False):
@@ -25,9 +25,9 @@ class Container(Component):
 
         content.position = self.owner
         if not triggered_action:
-            say(f"You {action("put")} the {thing(content.name)} into the {thing(self.owner.name)}.")
+            say(f"You {action("put")} the {thing(content.name)} {req("into")} the {thing(self.owner.name)}.")
             return
-        say(f"You also {action("put")} the {thing(content.name)} into the {thing(self.owner.name)}. Because the {thing(former_container_obj.name)} contained it")
+        say(f"You also {action("put")} the {thing(content.name)} {req("into")} the {thing(self.owner.name)}. Because the {thing(former_container_obj.name)} contained it")
 
     def empty(self):
         if len(self.contains) <= 0:

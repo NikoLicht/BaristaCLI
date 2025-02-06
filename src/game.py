@@ -31,6 +31,8 @@ class Game:
     def register_action(self, action: ActionObject):
         if action.name not in self.registered_actions:
             self.registered_actions[action.name.lower()] = action
+        else:
+            self.registered_actions[action.name.lower()].add_action_object(action)
 
     def perform_action_simple(self, try_action, object: GameObject):
         object.try_call_method(try_action)
@@ -51,7 +53,7 @@ class Game:
 
     def create_new_game_object(self, name: str, type: Type[GameObject]) -> GameObject:
         self.objects[name] = type(self)
-        say(f"{thing(name)} has been added to your {action("objects")}.")
+        say(f"{thing(name)} has been added to your objects.")
         return self.objects[name]
 
 

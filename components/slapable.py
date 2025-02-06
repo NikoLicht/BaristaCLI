@@ -9,7 +9,7 @@ from src.action_object import ActionObject
 class Slapable(Component):
     def __init__(self, flavour_text, on_slap: callable = None ):
         super().__init__()
-        self.add_method(ActionObject("slap", None), self.slap)
+        self.add_method(ActionObject("slap", None, True, methods=[self.slap]))
         self.slap_sounds = ["Whack!", "SLAP!", "Smack!"]
         self.flavour_text = flavour_text
         self.on_slap = on_slap

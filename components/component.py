@@ -8,27 +8,32 @@ class Component:
 
     def __init__(self):
         self.owner: GameObject = None
-        self._methods = {}  # Dictionary to store dynamically registered methods
-        self.methodQueue: Dict[ActionObject, Callable] = {}
+        self._component_methods: Dict[str, ActionObject] = {}
+        self.methodQueue: List[ActionObject] = []
         self.register_required_wordQueue: List[str] = []
 
-    def add_method(self, action_object: ActionObject, func: Callable):
-        if self.owner:
-            self.owner.register_callable_method(action_object, func)
-        else:
-            self.methodQueue[action_object] = func
+    def add_method(self, action_object: ActionObject):
+            self._component_methods[action_object.name] = action_object
+            self.register_method_game_instance(action_object)
 
     def attach_to(self, owner):
         self.owner = owner
-        if self.owner:
-            for action_object, func in self.methodQueue.items():
-                self.owner.register_callable_method(action_object, func)
-            self.methodQueue.clear()
 
         if self.owner:
             for word in self.register_required_wordQueue:
                 self.owner.register_required_word(word)
             self.register_required_wordQueue.clear()
+
+            for method in self.methodQueue:
+                self.register_method_game_instance(method)
+
+    def register_method_game_instance(self, action_object: ActionObject):
+        if self.owner:
+            action_object.add_game_object(self.owner)
+            self.owner.game_instance.register_action(action_object)
+        else:
+            self.methodQueue.append(action_object)
+
 
     def register_required_word(self, word: str):
         if self.owner:
@@ -36,9 +41,8 @@ class Component:
         else:
             self.register_required_wordQueue.append(word)
 
-
-    def get_methods(self):
-        return self._methods
+    def get_methods(self) -> Dict[str, ActionObject]:
+        return self._component_methods
     
     def key(self) -> str:
         return self.__class__.__name__.lower()

@@ -10,14 +10,14 @@ class AeroPress(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "AeroPress"
-        self.register_callable_method(ActionObject("press", "into", False), self.press)
+        self.register_callable_method(ActionObject("press", "into", False, [self.press], [self]))
         self.AddComponent(Slapable("You knock the AeroPress over, you doof."))
         self.container: Container = self.AddComponent(Container())
         self.AddComponent(Watchable("The suspect seems to have a plastic-like composition."))
         self.flavour_impact = ["Plasticy"]
         self.property = Physical.SOLID
 
-    def press(self):
+    def press(self, into_target):
         contents: List["GameObject"] = self.container.get_contents([])
         grammar = Grammar()
 

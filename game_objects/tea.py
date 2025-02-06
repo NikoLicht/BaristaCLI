@@ -14,7 +14,7 @@ class Tea(GameObject):
         self.game_instance = game_instance
         self.AddComponent(Edible(f"The {thing("tea")} suck all the moisture from your mouth, in exchange for the taste of bitter dried leafes."))
         self.AddComponent(Watchable("It appears as a mix between leafy and pointless. Interesting."))
-        self.register_callable_method(ActionObject("dispose", None), self.dispose)
+        self.register_callable_method(ActionObject("dispose", None, False, [self.dispose], [ self ]))
 
     def dispose(self):
         say(f"You joyfully {action("dispose")} of the {thing(self.name)}. You are right. Let's get rid of this terrible pile of dried leaves.")

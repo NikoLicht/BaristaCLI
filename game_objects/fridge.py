@@ -4,12 +4,13 @@ from src.printing import *
 from src.state import Physical
 from src.action_object import ActionObject  
 
-
+#something is not working with the cration of objects in the game class, meaning the command open fridge - > watch fridge does something terrible?
+#perhaps an endless loop.
 class Fridge(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "fridge"
-        self.register_callable_method(ActionObject("open", None), self.open)
+        self.register_callable_method(ActionObject("open", None, False, [self.open], [self]))
         self.watch: Watchable = self.AddComponent(Watchable("You wonder what mysteries it contains. You also wonder about the humming sound it makes."))
         self.has_watched = False
         self.container: Container = self.AddComponent(Container())

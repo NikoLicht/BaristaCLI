@@ -12,14 +12,14 @@ if TYPE_CHECKING:
 class GameObject:
     def __init__(self, game_instance):
         self._components: Dict[str, Component]= {}
-        self._callable_methods: Dict[str, function]= {}
+        self._game_object_methods: Dict[str, function]= {}
         self.required_words = []
         self._state_list = []
         self.name = ""
         self.game_instance: Game = game_instance
-        self.register_callable_method(ActionObject("status", None, False), self.status)
-        self.register_callable_method(ActionObject("actions", None, False), self.list_actions)
-        self.register_callable_method(ActionObject("put", "into", True), self.put)
+        self.register_callable_method(ActionObject("status", None, False, [self.status], [ self ]))
+        self.register_callable_method(ActionObject("actions", None, False, [self.list_actions], [ self ]))
+        self.register_callable_method(ActionObject("put", "into", True, [self.put], [ self ]))
         self.position: GameObject = None
         self.flavour_impact = None
         self.property: Physical = Physical.SOLID
@@ -57,11 +57,17 @@ class GameObject:
 
     def list_actions(self):
         general_actions = ["status", "actions", "put"]
-        action_list = [x for x in self._callable_methods.keys() if x not in general_actions]
+        action_list = [x for x in self._game_object_methods.keys()]
+        component_action_dict = self.get_all_methods() 
+        action_list.extend([x for x in component_action_dict.keys()])
+        action_list = [x for x in action_list if x not in general_actions]
+
         grammar = Grammar()
         say(f"   [u]{thing(self.name)} action overview                         [/u]")
         say(f"   General actions: {grammar.make_list(general_actions, style=action)}")
-        say(f"    Unique actions: {grammar.make_list(action_list, style=action)}")
+
+        if len(action_list) > 0:
+            say(f"    Unique actions: {grammar.make_list(action_list, style=action)}")
 
         if self.required_words is not None and len(self.required_words) > 0:
             say(f"          Supports: {grammar.make_list(self.required_words, style=req)}")
@@ -74,11 +80,10 @@ class GameObject:
             warn(f"You cannot {action('put')} {thing(self.name)} into {thing(into.name)}")
 
     def AddComponent(self, component: Component) -> Component:
+        # Attach the component to the game object
         component.attach_to(self)
         self._components[component.key()] = component
-        for key, func in component.get_methods().items():
-            if key not in self._callable_methods:
-                self._callable_methods[key] = func
+
         return component
 
     def get_component(self, name):
@@ -90,8 +95,8 @@ class GameObject:
     def has_state(self, state):
         return state in self._state_list
 
-    def register_callable_method(self, action_object: ActionObject, method: Callable ):
-        self._callable_methods[action_object.name] = method
+    def register_callable_method(self, action_object: ActionObject):
+        self._game_object_methods[action_object.name] = action_object
         self.game_instance.register_action(action_object)
     
     def register_required_word(self, word: str):
@@ -106,12 +111,27 @@ class GameObject:
             if self.property_change_action[property] is not None:
                 self.property_change_action[property]()
 
-    def try_call_method(self, method_name, with_object = None):
-        if method_name in self._callable_methods:
-            if with_object:
-                self._callable_methods[method_name](with_object)
+    def get_all_methods(self):
+        joined_methods: Dict[str, ActionObject] = {}
+        for comp in self._components:
+            methods = self._components[comp].get_methods()
+            if methods:
+                joined_methods.update(methods)
+
+        for key, value in self._game_object_methods.items():
+            if key not in joined_methods:
+                joined_methods[key] = value
+
+        return joined_methods
+
+
+    def try_call_method(self, method_name, target_object = None):
+        all_methods: Dict[str, ActionObject] = self.get_all_methods()
+        if method_name in all_methods:
+            if target_object:
+                all_methods[method_name].get_method()(target_object) 
                 return
-            self._callable_methods[method_name]()
+            all_methods[method_name].get_method()()
             return
 
         # If the method is not found
