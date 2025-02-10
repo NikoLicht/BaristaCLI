@@ -129,6 +129,8 @@ class CLI():
         match command:
             case "exit" | "quit":
                 say(f"{barista("Bye! See you tomorrow!")}")
+                self.log_command_to_file("exit")
+                self.log_command_to_file("-------------------------")
                 time.sleep(3)
                 exit(0)
 
@@ -171,6 +173,10 @@ class CLI():
         user_input = console.input(prompt)  # Get user input
 
         return user_input  # Return the raw input for processing
+    
+    def log_command_to_file(self, command):
+        with open("commands.log", "a") as file:
+            file.write(command + "\n")
 
     def run(self):
         say(
@@ -184,5 +190,7 @@ class CLI():
         while True:
             command = self.styled_input(barista("barista >  "))
             parsed_command = self.parse_command(command)
+            if parsed_command is not None:
+                self.log_command_to_file(command)
             self.execute_command(parsed_command)
 
