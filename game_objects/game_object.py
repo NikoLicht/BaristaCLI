@@ -1,3 +1,4 @@
+from __future__ import annotations
 from components.component import Component
 from components.container import Container
 from src.grammar import Grammar
@@ -8,6 +9,8 @@ from collections.abc import Callable
 from src.action_object import ActionObject
 if TYPE_CHECKING:
     from src.game import Game
+
+
 
 class GameObject:
     def __init__(self, game_instance):
@@ -139,6 +142,18 @@ class GameObject:
 
     def supports_required_word(self, word) -> bool:
         return word in self.required_words
+    
+    def set_position(self, new_position: GameObject):
+        if self.position is not None:
+            prev_container: Container = self.position.get_component("container")
+            if prev_container:
+                prev_container.remove_content(self)
+        self.position = new_position
+        new_container: Container = new_position.get_component("container")
+        if new_container:
+            new_container.contains.append(self)
+        
+
         
 
     def __str__(self):

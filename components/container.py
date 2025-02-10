@@ -37,7 +37,10 @@ class Container(Component):
             say(f"You remove the {grammar.make_list(self.contains)} from the {thing(self.owner.name)}.")
             for obj in self.contains:
                 obj.position = None
-            self.contains.clear()
+            self.clear_contents()
+
+    def clear_contents(self):
+        self.contains.clear()
 
     def remove_content(self, content):
         if content in self.contains:

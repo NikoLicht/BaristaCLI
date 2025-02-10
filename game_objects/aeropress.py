@@ -45,22 +45,28 @@ class AeroPress(GameObject):
             if obj.flavour_impact:
                 emparted_flavours.extend(obj.flavour_impact)
 
-        good_extraction: bool = any(obj.has_state("hot") for obj in check_for_hot)
+        extraction_level: int = 1 if any(obj.has_state("hot") for obj in check_for_hot) else 0
 
         say(f"You press the {grammar.make_list(contents)} through the {thing(self.name)}.")
-        if good_extraction:
-            say(f"You have made a flavourful product it seems.")
-            say(f"It has delicious and elegant flavours such as {grammar.make_list(emparted_flavours)}.")
-        else:
-            say(f"By not using hot liquid, you have made a bland product.")
-            say(f"It has faint {grammar.make_list(emparted_flavours)} taste.")
+
+        if len(contents) == 1:
+            say(f"But it is essentially still just {thing(contents[0].name)}. Now it is just inside the {thing(into_target.name)}.")
+            contents[0].set_position(into_target)
+            self.container.clear_contents()
+            return
+
+        
+        self.game_instance.destroy_game_object(self.container.get_contents([]))
+        self.container.clear_contents()
+
+        from .product import Product
+        product = self.game_instance.create_new_game_object("product", Product)
+        product.setup(contents, extraction_level)
+        product.set_position(into_target)
         
         from .puck import Puck
         puck = self.game_instance.create_new_game_object("puck", Puck)
         puck.setup(contents)
-        puck.position = self
+        puck.set_position(into_target)
 
 
-        #make puck 
-        #make product
-        #self.container.empty()
