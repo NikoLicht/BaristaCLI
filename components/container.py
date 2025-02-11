@@ -14,7 +14,11 @@ class Container(Component):
         self.add_method(ActionObject("empty", None, methods=[self.empty]))
         self.register_required_word("into")
 
-    def fill(self, content, triggered_action = False):
+    def fill(self, content, triggered_action = False) -> None:
+        """Puts content into this container.
+        
+        :param content GameObject: the content to add
+        :param triggered_action bool: is it triggered externally (not by player)"""
         self.contains.append(content)
         former_container_obj = content.position
 
@@ -30,6 +34,7 @@ class Container(Component):
         say(f"You also {action("put")} the {thing(content.name)} {req("into")} the {thing(self.owner.name)}. Because the {thing(former_container_obj.name)} contained it")
 
     def empty(self):
+        """The 'empty' action, has print output."""
         if len(self.contains) <= 0:
             say(f"There is nothing in the {thing(self.owner.name)} ... yet. You cannot {action("empty")} it.")
         else:
@@ -40,22 +45,32 @@ class Container(Component):
             self.clear_contents()
 
     def clear_contents(self):
+        """Empties container"""
         self.contains.clear()
 
     def remove_content(self, content):
+        """Remove specific item from contents"""
         if content in self.contains:
             self.contains.remove(content)
 
+    #TODO: maybe rework this to be general purpose?
     def recursive_action(self, action: str, arg):
+        """Tries to call same action on all contents"""
         for object in self.contains:
             object.try_call_method(action, arg)
 
     def status(self):
+        """Container specific status fuction"""
         grammar = Grammar()
         if len(self.contains) > 0:
             say(f"{thing(self.owner.name)} contains {grammar.make_list(self.contains)}.")
 
     def get_contents(self, discovered_items: List) -> List["GameObject"]:
+        """
+        Recusively gets all nested gameobjects as a flattened list.
+
+        :param str discovered_itemes: initally an empty list that gets passed on to each call 
+        """
         for content in self.contains:
             if content not in discovered_items:
                 discovered_items.append(content)
