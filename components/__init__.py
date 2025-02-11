@@ -8,7 +8,8 @@ from .powered import Powered
 from .crankable import Crankable
 from .watchable import Watchable
 from .slapable import Slapable
+from .trowable import Throwable
 
 # Define the public API of the package
-__all__ = ["Component", "Boilable", "Container", "Drinkable", "Edible", "Powered", "Crankable", "Watchable", "Slapable"]
+__all__ = ["Component", "Boilable", "Container", "Drinkable", "Edible", "Powered", "Crankable", "Watchable", "Slapable", "Throwable"]
 

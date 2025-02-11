@@ -13,9 +13,11 @@ class Cup(GameObject):
         self.property = Physical.SOLID
         self.flavour_impact = ["gravel"]
         self.game_instance = game_instance
+        self.weight = 421
 
         self.AddComponent(Watchable(f"One of your favourite cups. You really love this {thing(self.name)}, that your grandmother gave you."))
         self.AddComponent(Slapable("[italic]Why did I just do that[/ italic]- you think.", self.break_cup))
+        self.AddComponent(Throwable())
         self.container: Container = self.AddComponent(Container())
         self.register_callable_method(ActionObject("swirl", None, False, [self.swirl], [self]))
 

@@ -6,9 +6,11 @@ class Beans(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "beans"
+        self.weight = 18
         self.AddComponent(Edible())
         self.AddComponent(Watchable("Tiny little brown things with an almost burned exterior."))
         self.AddComponent(Slapable("Maybe to impact flavour?"))
+        self.AddComponent(Throwable())
         self.flavour_impact = ["bitter"]
         self.property = Physical.SOLID
         self.spelling = {

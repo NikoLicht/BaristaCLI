@@ -19,6 +19,8 @@ class GameObject:
         self.required_words = []
         self._state_list = []
         self.name = ""
+        self.weight = 120
+        self.lore = f"It is really just a {self.name}."
         self.game_instance: Game = game_instance
         self.register_callable_method(ActionObject("status", None, False, [self.status], [ self ]))
         self.register_callable_method(ActionObject("actions", None, False, [self.list_actions], [ self ]))
@@ -36,6 +38,7 @@ class GameObject:
 
 
     def status(self):
+        """Prints the status of the gameobject and its components."""
         grammar = Grammar()
 
         #status string
@@ -59,6 +62,7 @@ class GameObject:
 
 
     def list_actions(self):
+        """prints all actions that the game_object has."""
         general_actions = ["status", "actions", "put"]
         action_list = [x for x in self._game_object_methods.keys()]
         component_action_dict = self.get_all_methods() 
@@ -153,7 +157,13 @@ class GameObject:
         if new_container:
             new_container.contains.append(self)
         
-
+    def get_weight(self) -> int:
+        """gets the weight in grams of object and all contained objects"""
+        container: Container = self.get_component("container")
+        total = self.weight
+        if container:
+            [total := total + x.weight for x in container.get_contents([])]
+        return total
         
 
     def __str__(self):

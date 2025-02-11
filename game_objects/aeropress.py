@@ -10,10 +10,12 @@ class AeroPress(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "AeroPress"
+        self.weight = 323
         self.register_callable_method(ActionObject("press", "into", False, [self.press], [self]))
         self.AddComponent(Slapable("You knock the AeroPress over, you doof."))
         self.container: Container = self.AddComponent(Container())
         self.AddComponent(Watchable("The suspect seems to have a plastic-like composition."))
+        self.AddComponent(Throwable())
         self.flavour_impact = ["Plasticy"]
         self.property = Physical.SOLID
 

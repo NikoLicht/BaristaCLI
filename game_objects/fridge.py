@@ -10,8 +10,10 @@ class Fridge(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "fridge"
+        self.weight = 102000
         self.register_callable_method(ActionObject("open", None, False, [self.open], [self]))
         self.watch: Watchable = self.AddComponent(Watchable("You wonder what mysteries it contains. You also wonder about the humming sound it makes."))
+        self.AddComponent(Throwable())
         self.has_watched = False
         self.container: Container = self.AddComponent(Container())
         self.flavour_impact = ["refrigerant", "electronics"]
