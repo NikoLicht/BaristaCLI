@@ -1,0 +1,15 @@
+trigger:
+  branches:
+    include:
+      - main  # Change to your branch name
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - checkout: self
+
+  - script: |
+      chmod +x build.sh  # Ensure script is executable
+      ./build.sh
+    displayName: 'Run Build Script'
