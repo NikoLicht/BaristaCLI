@@ -9,7 +9,7 @@ pool:
 steps:
   - checkout: self  # Get the code from GitHub
 
-  - task: UsePythonVersion@1
+  - task: UsePythonVersion@0
     inputs:
       versionSpec: '3.x'  # Ensure Python is available
 
