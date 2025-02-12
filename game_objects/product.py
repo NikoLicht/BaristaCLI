@@ -12,6 +12,7 @@ class Product(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "product"
+        self.lore = "This is the liquid you have produced with your very particular recipe and somewhat unique approach."
         self.flavour_impact = []
         self.property = Physical.LIQUID
         self.AddComponent(Drinkable())

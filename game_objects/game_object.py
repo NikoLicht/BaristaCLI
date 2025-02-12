@@ -60,6 +60,9 @@ class GameObject:
         for comp in self._components:
             self._components[comp].try_call("status")
 
+    def explanation(self):
+        say(self.lore)
+
 
     def list_actions(self):
         """prints all actions that the game_object has."""

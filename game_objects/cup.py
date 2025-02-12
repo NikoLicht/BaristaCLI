@@ -14,6 +14,7 @@ class Cup(GameObject):
         self.flavour_impact = ["gravel"]
         self.game_instance = game_instance
         self.weight = 421
+        self.lore = "This is a double-walled ceramic thermo Nomad mug, holding approximatly 250ml. In the color taupe. Very nice."
 
         self.AddComponent(Watchable(f"One of your favourite cups. You really love this {thing(self.name)}, that your grandmother gave you."))
         self.AddComponent(Slapable("[italic]Why did I just do that[/ italic]- you think.", self.break_cup))

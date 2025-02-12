@@ -11,6 +11,7 @@ class Onion(GameObject):
         self.property = Physical.SOLID
         self.game_instance = game_instance
         self.flavour_impact = ["tear-inducing"]
+        self.lore = "Harvested from the semi-local onion fields in your closest produce producing country."
 
         self.AddComponent(Edible(f"You force yourself to {action("eat")} the entire {thing(self.name)}. Now you are crying.", on_eat=self.on_eat))
         self.AddComponent(Watchable("It looks appealing somehow. The shape is very bulbous."))

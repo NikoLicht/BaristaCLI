@@ -7,6 +7,7 @@ class Ketchup(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "ketchup"
+        self.lore = f"Hmm, it has been in the {thing("fridge")} for quite some time. It is a Heinz bottle."
         self.AddComponent(Drinkable())
         self.AddComponent(Watchable("The color is somehwat disturbing."))
         self.AddComponent(Container())

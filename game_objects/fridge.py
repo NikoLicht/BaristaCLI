@@ -3,6 +3,7 @@ from components import *
 from src.printing import *
 from src.state import Physical
 from src.action_object import ActionObject  
+from random import choice
 
 #something is not working with the cration of objects in the game class, meaning the command open fridge - > watch fridge does something terrible?
 #perhaps an endless loop.
@@ -11,6 +12,8 @@ class Fridge(GameObject):
         super().__init__(game_instance)
         self.name = "fridge"
         self.weight = 102000
+        self.spelled_word = choice(["F R I D G E", "B U T T E R", "S A D", "B E A N S", "S U D O"])
+        self.lore = f"Nice pistacchio-colored retro fridge from the brand SMEG. You've had it for a while. Upon it hangs a few magnetic letts speling out {self.spelled_word}."
         self.register_callable_method(ActionObject("open", None, False, [self.open], [self]))
         self.watch: Watchable = self.AddComponent(Watchable("You wonder what mysteries it contains. You also wonder about the humming sound it makes."))
         self.AddComponent(Throwable())

@@ -10,6 +10,7 @@ class AeroPress(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "AeroPress"
+        self.lore = "An amazing, yet simple, coffee maker, that is somehat a mix between a french-press and a syringe. This is the old model made from some-colored plastic. The numbers are almost not visible anymore."
         self.weight = 323
         self.register_callable_method(ActionObject("press", "into", False, [self.press], [self]))
         self.AddComponent(Slapable("You knock the AeroPress over, you doof."))

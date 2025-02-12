@@ -9,6 +9,7 @@ class Grinder(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
         self.name = "grinder"
+        self.lore = "The new super premium Commandante, what a delicious mechanical feel it has. It can fit surprisingly much."
         self.container: Container = self.AddComponent(Container())
         self.AddComponent(Crankable(self.grind))
         self.AddComponent(Watchable("It bears marks of use, like a warriors armor."))

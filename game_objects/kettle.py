@@ -8,6 +8,7 @@ class Kettle(GameObject):
     def __init__(self, game):
         super().__init__(game)
         self.name = "kettle"
+        self.lore = "It is a goosneck kettle."
         self.AddComponent(Powered(self.boil_contents))
         self.AddComponent(Watchable(f"It does seem to be a {thing(self.name)}. Very interesting."))
         self.AddComponent(Slapable(f"With your dead-fish-like hands, you manage to knock over the {thing(self.name)}."))

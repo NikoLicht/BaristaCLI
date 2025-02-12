@@ -35,7 +35,7 @@ class CLI():
                 return
         
             if command.action in self.game_instance.objects:
-                self.game_instance.objects[command.action].try_call_method("status")
+                self.game_instance.objects[command.action].explanation()
                 return
             
         for obj in command.input_objects:
