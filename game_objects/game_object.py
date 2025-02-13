@@ -19,8 +19,8 @@ class GameObject:
         self.required_words = []
         self._state_list = []
         self.name = ""
+        self._lore = None
         self.weight = 120
-        self.lore = f"It is really just a {self.name}."
         self.game_instance: Game = game_instance
         self.register_callable_method(ActionObject("status", None, False, [self.status], [ self ]))
         self.register_callable_method(ActionObject("actions", None, False, [self.list_actions], [ self ]))
@@ -62,6 +62,14 @@ class GameObject:
 
     def explanation(self):
         say(self.lore)
+
+    @property
+    def lore(self):
+        return self._lore if self._lore else f"It is really just {self.name}."
+    
+    @lore.setter
+    def lore(self, value: str):
+        self._lore = value
 
 
     def list_actions(self):

@@ -10,7 +10,7 @@ class Puck(GameObject):
         self.flavour_impact = ["muddy"]
         self.in_mixture = []
         self.name = "Puck"
-        self.lore = "This is the remains that are left, after having extracted (almost) all the liquid."
+        self.lore = "This is the remains left over after having extracted (almost) all the liquid."
         self.AddComponent(Watchable("Upon close inspection, you realize, that perhaps you press too hard, or maybe your grinds are too coarse."))
         self.AddComponent(Edible("It is simply too tempting. You take a big bite of the brownie-like result. Instantly your face reads regret."))
 
