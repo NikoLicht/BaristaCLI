@@ -26,27 +26,35 @@ steps:
     displayName: 'Check Executables Folder'
 
   - script: |
-      echo "Reading version.txt with echo"
+      echo "Reading version.txt with powershell"
       powershell -Command "Get-Content Executables/version.txt"
-    displayName: 'Read version.txt with echo'
+    displayName: 'Read version.txt with powershell'
 
   - script: |
-      echo "Reading version from version.txt (UTF-8)..."
+      echo "Reading version from version.txt with PowerShell..."
       
-      for /f "usebackq tokens=* delims=" %%x in (Executables/version.txt) do set VERSION=%%x
-      echo "Latest version: %VERSION%"
-      
-      set BUILD_FILE=Executables/BaristaCLI_v%VERSION%.exe
-      echo "Checking if build file exists: [%BUILD_FILE%]"
-      
-      if not exist %BUILD_FILE% (
-          echo "ERROR: Build file not found!"
-          exit /b 1
-      )
+      $version = Get-Content Executables/version.txt | Out-String
+      $version = $version.Trim()
 
-      echo ##vso[task.setvariable variable=BUILD_FILE]%BUILD_FILE%
-      echo "Publishing [%BUILD_FILE%]"
-    displayName: 'Read version.txt (UTF-8)'
+      if ($version -match '^\d+$') {
+          Write-Host "Latest version: $version"
+      } else {
+          Write-Host "ERROR: Invalid version format in version.txt"
+          exit 1
+      }
+
+      $buildFile = "Executables/BaristaCLI_v$version.exe"
+      Write-Host "Checking if build file exists: $buildFile"
+
+      if (-not (Test-Path $buildFile)) {
+          Write-Host "ERROR: Build file not found!"
+          exit 1
+      }
+
+      echo "##vso[task.setvariable variable=BUILD_FILE]$buildFile"
+      Write-Host "Publishing $buildFile"
+    displayName: 'Read version.txt and set BUILD_FILE'
+
 
   - task: PublishBuildArtifacts@1
     inputs:
