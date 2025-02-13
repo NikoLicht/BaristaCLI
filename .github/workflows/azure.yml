@@ -17,26 +17,23 @@ steps:
     inputs:
       versionSpec: '3.x'
 
-  - script: |
-      powershell -ExecutionPolicy Unrestricted -File build.ps1
-    displayName: 'Run Build Script'
+  #- script: |
+      #powershell -ExecutionPolicy Unrestricted -File build.ps1
+    #displayName: 'Run Build Script'
 
   - script: |
       dir Executables
     displayName: 'Check Executables Folder'
 
   - script: |
-      echo "Reading version.txt with PowerShell..."
-      powershell -Command "Get-Content Executables/version.txt"
-    displayName: 'Read version.txt with PowerShell'
-
-
+      echo "Reading version.txt with Type"
+      type Executables/version.txt
+    displayName: 'Read version.txt with Type'
 
   - script: |
       echo "Reading version from version.txt (UTF-8)..."
       
       for /f "usebackq tokens=* delims=" %%x in (Executables/version.txt) do set VERSION=%%x
-      
       echo "Latest version (UTF-8): [%VERSION%]"
       
       set BUILD_FILE=Executables/BaristaCLI_v%VERSION%.exe
@@ -47,11 +44,10 @@ steps:
           exit /b 1
       )
 
-      echo "Publishing [%BUILD_FILE%]"
+      # Publish the file using Azure Pipelines syntax
       echo ##vso[task.setvariable variable=BUILD_FILE]%BUILD_FILE%
+      echo "Publishing [%BUILD_FILE%]"
     displayName: 'Read version.txt (UTF-8)'
-
-
 
   - task: PublishBuildArtifacts@1
     inputs:
