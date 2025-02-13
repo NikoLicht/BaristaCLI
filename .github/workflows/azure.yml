@@ -26,6 +26,12 @@ steps:
     displayName: 'Check Executables Folder'
 
   - script: |
+    echo "DEBUG: Checking version.txt contents:"
+    type Executables/version.txt
+  displayName: 'Debug version.txt'
+
+
+  - script: |
       echo "Reading version from version.txt..."
       
       for /f "usebackq tokens=* delims=" %%x in (Executables/version.txt) do set VERSION=%%x
