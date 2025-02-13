@@ -33,28 +33,22 @@ steps:
   - script: |
       echo "Reading version from version.txt with PowerShell..."
       
-      powershell -Command |
-        $version = Get-Content Executables/version.txt | Out-String
-        $version = $version.Trim()  # Remove any whitespace or newlines
+      for /f "delims=" %%x in ('powershell -Command "Get-Content Executables/version.txt | Out-String | ForEach-Object { $_.Trim() }"') do set VERSION=%%x
 
-        if ($version -match '^\d+$') {
-            Write-Host "Latest version: $version"
-        } else {
-            Write-Host "ERROR: Invalid version format in version.txt"
-            exit 1
-        }
+      echo "Latest version: %VERSION%"
 
-        $buildFile = "Executables/BaristaCLI_v$version.exe"
-        Write-Host "Checking if build file exists: $buildFile"
+      set BUILD_FILE=Executables/BaristaCLI_v%VERSION%.exe
+      echo "Checking if build file exists: [%BUILD_FILE%]"
+      
+      if not exist %BUILD_FILE% (
+          echo "ERROR: Build file not found!"
+          exit /b 1
+      )
 
-        if (-not (Test-Path $buildFile)) {
-            Write-Host "ERROR: Build file not found!"
-            exit 1
-        }
-
-        echo "##vso[task.setvariable variable=BUILD_FILE]$buildFile"
-        Write-Host "Publishing $buildFile"
+      echo "Publishing [%BUILD_FILE%]"
+      echo ##vso[task.setvariable variable=BUILD_FILE]%BUILD_FILE%
     displayName: 'Read version.txt and set BUILD_FILE'
+
 
 
   - task: PublishBuildArtifacts@1
