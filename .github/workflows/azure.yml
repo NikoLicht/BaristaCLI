@@ -17,10 +17,6 @@ steps:
     inputs:
       versionSpec: '3.x'
 
-  - script: mkdir Executables
-    displayName: 'Ensure Executables Folder Exists'
-    condition: always()
-
   - script: |
       powershell -ExecutionPolicy Unrestricted -File build.ps1
     displayName: 'Run Build Script'
