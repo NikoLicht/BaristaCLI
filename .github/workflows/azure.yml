@@ -54,6 +54,7 @@ steps:
       echo "##vso[task.setvariable variable=BUILD_FILE]$buildFile"
       Write-Host "Publishing $buildFile"
     displayName: 'Read version.txt and set BUILD_FILE'
+    shell: powershell
 
 
   - task: PublishBuildArtifacts@1
