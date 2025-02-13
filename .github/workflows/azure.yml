@@ -1,23 +1,43 @@
 trigger:
   branches:
     include:
-      - main  # Runs pipeline when code is pushed to main
+      - main
+  paths:
+    exclude:
+      - Executables/*
+  
 
 pool:
-  vmImage: 'windows-latest'  # Use Windows for building .exe
+  vmImage: 'windows-latest'
 
 steps:
-  - checkout: self  # Get the code from GitHub
+  - checkout: self
 
   - task: UsePythonVersion@0
     inputs:
-      versionSpec: '3.x'  # Ensure Python is available
+      versionSpec: '3.x'
+
+  - script: mkdir Executables
+    displayName: 'Ensure Executables Folder Exists'
+    condition: always()
 
   - script: |
       powershell -ExecutionPolicy Unrestricted -File build.ps1
     displayName: 'Run Build Script'
 
+  - script: |
+      dir Executables
+    displayName: 'Check Executables Folder'
+
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: 'Executables/'  # Adjust this to where your .exe is stored
-      artifactName: 'azure_build_latest'  # Name of the artifact
+      pathToPublish: 'Executables/'  # Adjust based on actual output
+      artifactName: 'azure_build_latest'
+
+  - script: |
+      git config --global user.email "artmole.niko@gmail.com"
+      git config --global user.name "Azure DevOps"
+      git add Executables/
+      git commit -m "Update executable from latest build"
+      git push
+    displayName: 'Commit and Push to GitHub'
