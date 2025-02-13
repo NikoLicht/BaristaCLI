@@ -27,11 +27,26 @@ if (Test-Path ".git") {
 
 # Get the latest version number
 $versionFile = "$EXECUTABLES_DIR\version.txt"
+
+# Check if the version file exists
 if (Test-Path $versionFile) {
-    $version = [int](Get-Content $versionFile) + 1
+    # Read the current version, clean it to ensure it's just a number
+    $currentVersion = Get-Content $versionFile | Out-String
+    $currentVersion = $currentVersion.Trim()  # Remove any extra whitespace or newline characters
+    
+    if ($currentVersion -match '^\d+$') {
+        # Increment the version number if it's a valid integer
+        $version = [int]$currentVersion + 1
+    } else {
+        Write-Host "ERROR: The version.txt file contains invalid data."
+        exit 1
+    }
 } else {
+    # If no version file exists, start at version 1
     $version = 1
 }
+
+# Set the executable file name with the new version
 $exeName = "BaristaCLI_v$version.exe"
 
 # Cleanup old build
