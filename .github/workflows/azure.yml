@@ -25,15 +25,26 @@ steps:
       dir Executables
     displayName: 'Check Executables Folder'
 
+  - script: |
+      echo "Reading version from version.txt..."
+      set /p VERSION=<Executables/version.txt
+      echo "Latest version: %VERSION%"
+      
+      set BUILD_FILE=Executables/BaristaCLI_v%VERSION%.exe
+      
+      echo "Checking if build file exists: %BUILD_FILE%"
+      if not exist %BUILD_FILE% (
+          echo "ERROR: Build file not found!"
+          exit /b 1
+      )
+
+      echo "Publishing %BUILD_FILE%"
+      echo ##vso[task.setvariable variable=BUILD_FILE]%BUILD_FILE%
+    displayName: 'Determine Latest Build File'
+
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: 'Executables/'  # Adjust based on actual output
-      artifactName: 'azure_build_latest'
+      pathToPublish: '$(BUILD_FILE)'  # Publishes only the latest .exe
+      artifactName: 'latest_build'
+    displayName: 'Publish Latest Build'
 
-  - script: |
-      git config --global user.email "artmole.niko@gmail.com"
-      git config --global user.name "Azure DevOps"
-      git add Executables/
-      git commit -m "Update executable from latest build"
-      git push
-    displayName: 'Commit and Push to GitHub'
