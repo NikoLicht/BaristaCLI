@@ -13,13 +13,13 @@ pool:
 steps:
   - checkout: self
 
-  #- task: UsePythonVersion@0
-    #inputs:
-      #versionSpec: '3.x'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
 
-  #- script: |
-      #powershell -ExecutionPolicy Unrestricted -File build.ps1
-    #displayName: 'Run Build Script'
+  - script: |
+      powershell -ExecutionPolicy Unrestricted -File build.ps1
+    displayName: 'Run Build Script'
 
   - script: |
       dir Executables
