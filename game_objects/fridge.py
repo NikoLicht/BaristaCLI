@@ -13,7 +13,7 @@ class Fridge(GameObject):
         self.name = "fridge"
         self.weight = 102000
         self.spelled_word = choice(["F R I D G E", "B U T T E R", "S A D", "B E A N S", "S U D O"])
-        self.lore = f"Nice pistacchio-colored retro fridge from the brand SMEG. You've had it for a while. Upon it hangs a few magnetic letts speling out {self.spelled_word}."
+        self.lore = f"Nice pistacchio-colored retro fridge from the brand SMEG. You've had it for a while. Upon it hangs a few magnetic letters spelling out {self.spelled_word}."
         self.register_callable_method(ActionObject("open", None, False, [self.open], [self]))
         self.watch: Watchable = self.AddComponent(Watchable("You wonder what mysteries it contains. You also wonder about the humming sound it makes."))
         self.AddComponent(Throwable())
