@@ -13,9 +13,9 @@ pool:
 steps:
   - checkout: self
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
+  #- task: UsePythonVersion@0
+    #inputs:
+      #versionSpec: '3.x'
 
   #- script: |
       #powershell -ExecutionPolicy Unrestricted -File build.ps1
@@ -26,9 +26,9 @@ steps:
     displayName: 'Check Executables Folder'
 
   - script: |
-      echo "Reading version.txt with Type"
-      type Executables/version.txt
-    displayName: 'Read version.txt with Type'
+      echo "Reading version.txt with echo"
+      powershell -Command "Get-Content Executables/version.txt"
+    displayName: 'Read version.txt with echo'
 
   - script: |
       echo "Reading version from version.txt (UTF-8)..."
