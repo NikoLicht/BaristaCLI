@@ -10,6 +10,13 @@ BaristaCLI includes a few differnt objects that each impement some different act
 ## Running BaristaCLI
 Choose one of the following methods to run the game:
 
+### Option #0: Run the Docker Container
+Find the docker container [here](https://hub.docker.com/u/artmole)
+Make sure to run it as an interactive terminal like this (but with the correct version):
+```sh
+docker run -it docker run -it artmole/barista_cli:0.2
+```
+
 ### Option #1: Run the Executable
 Simply run the latest **.exe file** located in the [Executables folder](https://github.com/NikoLicht/BaristaCLI/tree/main/Executables).
 
