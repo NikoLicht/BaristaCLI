@@ -179,8 +179,9 @@ class CLI():
             file.write(command + "\n")
 
     def run(self):
+        title("Barista CLI") 
         say(
-            f"Welcome to {barista("BaristaCLI")} a virtual coffee bar, where you make your own coffee.",
+            f"Welcome to {barista("Barista CLI")} a virtual coffee bar, where you make your own coffee.",
             f"    {action("quit")} - to leave your job as barista.",
             f"    {action("help")} - to get more info about it all.",
             f"    {action("objects")} - to list all objects.",

@@ -1,4 +1,5 @@
 from rich.console import Console
+from pyfiglet import Figlet
 
 console = Console()
 
@@ -16,6 +17,13 @@ def say(*messages):
         console = Console()
     for message in messages:
         console.print("    " + message)
+
+def title(title):
+    console.print("")
+    f = Figlet(font='standard')
+    graphic_title = f.renderText(title)
+    console.print(f"[plain]{graphic_title}[/plain]", style="dark_red", justify="center", highlight=False)
+    console.print(f"A CLI coffee brewing experience by Nikolaj Bundgaard Licht.", style="dark_red", justify="center")
 
 def wrap_style(text, style):
     global styles
@@ -41,4 +49,4 @@ def req(required) -> str:
     return wrap_style(required, "required")
 
 
-__all__ = ["say", "thing", "action", "warn", "barista", "styles", "req"]
+__all__ = ["say", "thing", "action", "warn", "barista", "styles", "req", "title"]
