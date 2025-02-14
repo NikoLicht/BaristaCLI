@@ -1,5 +1,4 @@
 from rich.console import Console
-from pyfiglet import Figlet
 
 console = Console()
 
@@ -20,8 +19,13 @@ def say(*messages):
 
 def title(title):
     console.print("")
-    f = Figlet(font='standard')
-    graphic_title = f.renderText(title)
+    graphic_title = """
+ ____             _     _            ____ _     ___ 
+| __ )  __ _ _ __(_)___| |_ __ _    / ___| |   |_ _|
+|  _ \ / _` | '__| / __| __/ _` |  | |   | |    | | 
+| |_) | (_| | |  | \__ \ || (_| |  | |___| |___ | | 
+|____/ \__,_|_|  |_|___/\__\__,_|   \____|_____|___|
+"""
     console.print(f"[plain]{graphic_title}[/plain]", style="dark_red", justify="center", highlight=False)
     console.print(f"A CLI coffee brewing experience by Nikolaj Bundgaard Licht.", style="dark_red", justify="center")
 
