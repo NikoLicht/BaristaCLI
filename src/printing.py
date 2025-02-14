@@ -19,6 +19,7 @@ def say(*messages):
 
 def title(title):
     console.print("")
+    title_style = "bold rosy_brown"
     graphic_title = """
  ____             _     _            ____ _     ___ 
 | __ )  __ _ _ __(_)___| |_ __ _    / ___| |   |_ _|
@@ -26,8 +27,8 @@ def title(title):
 | |_) | (_| | |  | \__ \ || (_| |  | |___| |___ | | 
 |____/ \__,_|_|  |_|___/\__\__,_|   \____|_____|___|
 """
-    console.print(f"[plain]{graphic_title}[/plain]", style="dark_red", justify="center", highlight=False)
-    console.print(f"A CLI coffee brewing experience by Nikolaj Bundgaard Licht.", style="dark_red", justify="center")
+    console.print(f"[plain]{graphic_title}[/plain]", style=title_style, justify="center", highlight=False)
+    console.print(f"A CLI coffee brewing experience by Nikolaj Bundgaard Licht.", style=title_style, justify="center")
 
 def wrap_style(text, style):
     global styles
