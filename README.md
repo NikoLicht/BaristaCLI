@@ -3,7 +3,8 @@ A little quirky terminal coffee adventure game. In this game you use actions on 
 
 BaristaCLI includes a few differnt objects that each impement some different actions. Watch out for the grinder that thing is a beast. Make sure to check out the fridge as well.
 
-![baristaCLI](https://github.com/user-attachments/assets/bab1f9bc-d1d2-4d37-87fc-4e2674fd02b4)
+![image](https://github.com/user-attachments/assets/20a3b41a-1713-4d35-a5f1-b1e3e4c8f762)
+
 
 ---
 
