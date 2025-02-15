@@ -7,7 +7,8 @@ styles = {
     "action": "bold rosy_brown",
     "warn": "italic deep_pink4",
     "barista": "bold wheat4",
-    "required": "italic medium_purple4"
+    "required": "italic medium_purple4",
+    "header": "u bold"
 }
 
 def say(*messages):
@@ -30,9 +31,18 @@ def title(title):
     console.print(f"[plain]{graphic_title}[/plain]", style=title_style, justify="center", highlight=False)
     console.print(f"A CLI coffee brewing experience by Nikolaj Bundgaard Licht.", style=title_style, justify="center")
 
+
 def wrap_style(text, style):
     global styles
     return f"[{styles[style]}]{text}[/{styles[style]}]"
+
+def header(text):
+    max = 35
+    extend = max - len(text)
+    header_text = text
+    for x in range(extend):
+        header_text += "_"
+    return wrap_style(header_text, "header")
 
 def thing(thing) -> str:
     return wrap_style(thing, "thing")
@@ -54,4 +64,4 @@ def req(required) -> str:
     return wrap_style(required, "required")
 
 
-__all__ = ["say", "thing", "action", "warn", "barista", "styles", "req", "title"]
+__all__ = ["say", "thing", "action", "warn", "barista", "styles", "req", "title", "header"]

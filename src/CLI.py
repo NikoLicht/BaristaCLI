@@ -135,28 +135,36 @@ class CLI():
                 exit(0)
 
             case "help":
+                say(f"{header("Help!")}")
                 say(
-                    f"You are the {barista()} in this command line coffe brewing experience",
-                    f"You interact by typing {action("actions")} and {thing("objects")} into the command line.",
-                    f"Use the action {action("objects")} to see all available interactable {thing("objects")}.",
-                    f"To see what {action("actions")} are available on a specific {thing("object")} type: {action("actions")} {thing("object")} eg. {action("actions")} {thing("water")}",
-                    f"The {action("put")} action is special, and requires a special grammar: {action("put")} {thing("water")} into {thing("kettle")}", 
-                    f"Funnily enough, the goal is to brew a coffee. Good luck, {barista()}.",
+                    f"You are the {barista()} in this command line coffee brewing experience",
+                    f"You interact by using {action("actions")} on {thing("objects")}. You do this by typing here in your terminal.",
+                    f"- Use {action("objects")} to see all available {thing("objects")}.",
+                    f"- Use {action("actions")} to get more info about actions.",
+                    f"- Use {action("actions")} {thing("object")} to see actions for [italic]that[/italic] object eg. {action("actions")} {thing("water")}.",
+                    f"- Some actions like {action("put")} are more complex and require a grammar like: {action("put")} {thing("water")} {req("into")} {thing("kettle")}.", 
+                    f"     - You can find out more about a specific action by typing {action("help")} {action("action")} eg. {action("help")} {thing("put")}.", 
                 )
 
             case "objects":
                 all_objects: str = grammar.make_list(list(self.game_instance.objects.keys()))
-                say(f"The {action("objects")} you have available are: {all_objects}")
+                say(f"{header("Objects")}")
+                say(f"The {thing("objects")} you have available are: {all_objects}")
 
             case "actions":
+                say(f"{header("Actions")}")
                 say(
-                    f"There are a few general actions that will get you started:",
-                    f"{action("help")} - to get more info about it all.",
-                    f"{action("objects")} - to list all objects.",
-                    f"{action("actions")} - to list basic actions.\n",
-                    f"And then a few actions you do to {thing("objects")}:",
-                    f"{action("status")} {thing("object")} - to see the current state of the object.",
-                    f"{action("actions")} {thing("object")} - to see what special actions you can do on that object."
+                    f"   [u]General actions:[/u]",
+                    f"   {action("help")} - to get more info about it all.",
+                    f"   {action("objects")} - to list all objects.",
+                    f"   {action("actions")} - to list basic actions.",
+                    f"   {action("quit")} - to quit",
+                    f"",
+                    f"   [u]Object Actions:[/u]",
+                    f"   And then a few actions you do to {thing("objects")}:",
+                    f"   {action("status")} {thing("object")} - to see the current state of the object.",
+                    f"   {action("actions")} {thing("object")} - to see the actions you can do to [italic]that[/italic] object.",
+                    f"   {action("put")} {thing("object")} into {thing("object")} - to put an object inside another object (that supports it)."
                     )
                 
             case "actions-all":
@@ -185,6 +193,7 @@ class CLI():
             f"    {action("quit")} - to leave your job as barista.",
             f"    {action("help")} - to get more info about it all.",
             f"    {action("objects")} - to list all objects.",
+            f"    {action("actions")} - for more about interacting.",
             "What do you want to do?",
             )
 

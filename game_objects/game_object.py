@@ -62,6 +62,8 @@ class GameObject:
 
     def explanation(self):
         say(self.lore)
+        say(f"Use {action("actions")} {thing(self.name)} - to see the applicable actions.")
+        say(f"Use {action("status")} {thing(self.name)} - to see the state of the {thing(self.name)}.")
 
     @property
     def lore(self):
