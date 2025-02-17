@@ -144,6 +144,7 @@ class CLI():
                     f"- Use {action("actions")} {thing("object")} to see actions for [italic]that[/italic] object eg. {action("actions")} {thing("water")}.",
                     f"- Some actions like {action("put")} are more complex and require a grammar like: {action("put")} {thing("water")} {req("into")} {thing("kettle")}.", 
                     f"     - You can find out more about a specific action by typing {action("help")} {action("action")} eg. {action("help")} {thing("put")}.", 
+                    f"  Use {thing("object")} on its own, to get more information about that thing. eg.: {thing("cup")}.",
                 )
 
             case "objects":
@@ -164,7 +165,10 @@ class CLI():
                     f"   And then a few actions you do to {thing("objects")}:",
                     f"   {action("status")} {thing("object")} - to see the current state of the object.",
                     f"   {action("actions")} {thing("object")} - to see the actions you can do to [italic]that[/italic] object.",
-                    f"   {action("put")} {thing("object")} into {thing("object")} - to put an object inside another object (that supports it)."
+                    f"   {action("put")} {thing("object")} {req("into")} {thing("object")} - to put an object inside another object (that supports it).",
+                    f"   {action("object")} - To get more info about [italic]that[/italic] particular thing.",
+                    f"",
+                    f"   You can find out more about a specific action by typing {action("help")} {action("action")} eg. {action("help")} {thing("put")}.", 
                     )
                 
             case "actions-all":

@@ -23,6 +23,9 @@ class Beans(GameObject):
             "it" : "they",
             "is" : "are"
         }
+        self.start_text = f"Todays beans are a {self.roast} roast from {self.origin_country}."
+        self.print_game_text()
+        
 
     def set_origin(self):
         coffee_flavors = {

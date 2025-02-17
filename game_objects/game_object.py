@@ -25,6 +25,7 @@ class GameObject:
         self.register_callable_method(ActionObject("status", None, False, [self.status], [ self ]))
         self.register_callable_method(ActionObject("actions", None, False, [self.list_actions], [ self ]))
         self.register_callable_method(ActionObject("put", "into", True, [self.put], [ self ]))
+        self.start_text = None
         self.position: GameObject = None
         self.flavour_impact = None
         self.property: Physical = Physical.SOLID
@@ -32,6 +33,7 @@ class GameObject:
             "it": "it",
             "is": "is"
         }
+        self.print_game_text()
 
         #implement this dict if anythin particular should happen, when the state is changed.        
         self.property_change_action: Dict[Physical, Callable] = {}
@@ -105,6 +107,10 @@ class GameObject:
         self._components[component.key()] = component
 
         return component
+    
+    def print_game_text(self):
+        if self.start_text is not None:
+            say(self.start_text)
 
     def get_component(self, name):
         return self._components.get(name.lower())

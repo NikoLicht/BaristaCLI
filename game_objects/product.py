@@ -18,6 +18,7 @@ class Product(GameObject):
         self.AddComponent(Drinkable())
         self.register_callable_method(ActionObject("analyze", None, False, [self.analyze]))
         self.register_callable_method(ActionObject("taste", None, False, [self.taste]))
+        self.fixed_flavours = None
 
     def setup(self, input: List[GameObject], extraction = 0):
         self.extraction = extraction
@@ -46,15 +47,24 @@ class Product(GameObject):
             case _:
                 complexity = "divine"
 
-        say(f"You take a sip of the {thing(self.name)}. You slurp it around in your mouth, trying to discern the different flavors.")
-        say(f"You quickly realize that the flavour is quite ... {complexity}. You notice very delicate yet prominent notes of {gr.make_list(self.flavour_impact, "and", req)}.")
+        say(f"You take a sip of the {thing(self.name)}. You swirl it around in your mouth, trying to discern the different flavors.")
+        say(f"You quickly realize that the flavour is quite ... {complexity}.")
+        if self.fixed_flavours is not None:
+            for flavour_text in self.fixed_flavours:
+                say(flavour_text)
+        else:
+            self.fixed_flavours = []
+            for i in range(3):
+                taste = self.get_taste_string(choice(self.flavour_impact))
+                say(taste)
+                self.fixed_flavours.append(taste)
 
 
     def analyze(self):
         smell = choice(self.input)
         color = choice(self.input)
 
-        say(f"You hold up the {thing(self.position.name)} and take a closer look at it.")
+        say(f"You hold up the {thing(self.position.name)} containing the {thing("product")} and take a closer look at it.")
         say(f"The color seems to be very akin to the {thing(color.name)} that you put into it.")
         say(f"The fragrance is very reminiscent of the {thing(smell.name)} that you put into it.")
         say(f"Interesting.")
@@ -62,6 +72,31 @@ class Product(GameObject):
     def mix_flavours(self):
         for obj in self.input:
             self.flavour_impact.extend(obj.flavour_impact)
+
+    def get_taste_string(self, flavour: str) -> str:
+        replies = [
+            f"You [italic]really[/italic] enjoy the {flavour}ness of the product.",
+            f"Most prominent is the {flavour}ness, which reminds you of childhood.",
+            f"{flavour}ness lingers in the mouth afterwards.",
+            f"This might be the most {flavour} coffee you've had today. Maybe even this week.",
+            f"Really strange how well the {flavour} components fit into the rest.",
+            f"There is just the slightest {flavour} hint in the coffee.",
+            f"This particular recipe really brings out the {flavour}ness.",
+            f"The {flavour}ness really wraps up the coffee nicely.",
+            f"A bold touch of {flavour} takes center stage in this cup.",
+            f"Subtle {flavour} notes dance on your palate.",
+            f"You detect a lingering {flavour} finish that keeps you coming back for another sip.",
+            f"The balance of {flavour} and other flavors makes this an exquisite experience.",
+            f"A surprising burst of {flavour}ness greets you at first sip, mellowing out as you drink.",
+            f"If coffee had a signature move, this one’s would be its {flavour} kick.",
+            f"The {flavour} undertones create a depth that keeps you intrigued.",
+            f"The coffee surprises you with an unexpected yet pleasant {flavour} twist.",
+            f"The {flavour} quality adds a nostalgic touch to the tasting experience.",
+            f"You never knew {flavour} could work so well in coffee—until now.",
+            f"As the coffee cools, the {flavour}ness becomes even more pronounced."
+        ]
+        return choice(replies)
+
 
     def flatten_input(self):
         all_objects = []

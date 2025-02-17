@@ -11,5 +11,5 @@ class Water(GameObject):
         self.AddComponent(Watchable("It has a weirdness to it."))
         self.AddComponent(Container())
         self.AddComponent(Slapable(f"{thing("Water")} splashes everywhere! It is quite humorous!"))
-        self.flavour_impact = ["mild"]
+        self.flavour_impact = ["wet"]
         self.property = Physical.LIQUID

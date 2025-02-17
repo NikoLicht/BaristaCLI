@@ -1,3 +1,4 @@
+from game_objects.mixture import Mixture
 from .game_object import *
 from components import *
 from src.grammar import Grammar
@@ -37,6 +38,7 @@ class AeroPress(GameObject):
             else:
                 sorted_states[property] = []
                 sorted_states[property].append(game_object)
+
         
         check_for_hot = sorted_states.get(Physical.LIQUID, []) + sorted_states.get(Physical.MUSH, [])
         if len(check_for_hot) == 0:
@@ -52,7 +54,8 @@ class AeroPress(GameObject):
 
         say(f"You press the {grammar.make_list(contents)} through the {thing(self.name)}.")
 
-        if len(contents) == 1:
+        contains_mixture = any(isinstance(cont, Mixture) for cont in contents)
+        if not contains_mixture and len(contents) == 1:
             say(f"But it is essentially still just {thing(contents[0].name)}. Now it is just inside the {thing(into_target.name)}.")
             contents[0].set_position(into_target)
             self.container.clear_contents()
