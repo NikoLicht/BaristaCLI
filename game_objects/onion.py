@@ -1,7 +1,7 @@
 from components import *
 from game_objects import *
 from src.printing import *
-from src.state import Physical
+from src.state import Physical, Temperature
 from src.grammar import Grammar
 
 class Onion(GameObject):
@@ -10,7 +10,8 @@ class Onion(GameObject):
         self.name = "Onion"
         self.property = Physical.SOLID
         self.game_instance = game_instance
-        self.flavour_impact = ["tear-inducing"]
+        self.add_taste("tear-inducing", 0.8, 2)
+        self.add_taste("sweet", 0.1, 1)
         self.lore = "Harvested from the semi-local onion fields in your closest produce producing country."
 
         self.AddComponent(Edible(f"You force yourself to {action("eat")} the entire {thing(self.name)}. Now you are crying.", on_eat=self.on_eat))

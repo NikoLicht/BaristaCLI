@@ -2,7 +2,7 @@ from components import *
 from src.grammar import Grammar
 from game_objects import *
 from src.printing import *
-from src.state import Physical, Verbs
+from src.state import Physical, Temperature
 
 class Grinder(GameObject):
 
@@ -14,7 +14,7 @@ class Grinder(GameObject):
         self.AddComponent(Crankable(self.grind))
         self.AddComponent(Watchable("It bears marks of use, like a warriors armor."))
         self.AddComponent(Slapable("Ouch! The metal grinder leaves an imprint on your hand. It is also knocked over."))
-        self.flavour_impact = ["Metallic"]
+        self.add_taste("metallic", 0.07, 3)
         self.property = Physical.SOLID
 
     def grind(self):

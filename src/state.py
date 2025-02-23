@@ -1,13 +1,21 @@
-from enum import Enum
+from enum import Enum, auto
 
 class Physical(Enum):
-    SOLID= 1
-    LIQUID= 2
-    GAS= 3
-    SAND= 4
-    MUSH= 5
+    SOLID= auto()
+    LIQUID= auto()
+    GAS= auto()
+    SAND= auto()
+    POWDER = auto()
+    MUSH= auto()
 
-class Verbs (Enum):
-    NORMAL= 1
-    HOT= 2
-    CONTAMINATED= 3
+class Temperature (Enum):
+    COLD = auto()
+    TEMPERED = auto()
+    HOT = auto()
+    
+
+class Extraction(Enum):
+    NONE = 0
+    UNDER = 1
+    MEDIUM = 2
+    OVER = 3

@@ -19,10 +19,9 @@ class Edible(Component):
             if self.taste:
                 say(f"You {action("eat")} the {thing(self.owner.name)}. {self.taste}")
             else:
-                say(f"You {action("eat")} the {thing(self.owner.name)}. It has quite a {gr.make_list(self.owner.flavour_impact)} aftertaste.")
+                say(f"You {action("eat")} the {thing(self.owner.name)}. It has quite a {gr.make_list(self.owner.get_flavour_list())} aftertaste.")
 
 
-        self.owner.add_state("consumed")
         container: Container = self.owner.get_component("container")
         if container:
             container.recursive_action("eat", True)

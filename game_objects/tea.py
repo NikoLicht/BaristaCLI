@@ -8,7 +8,8 @@ from src.action_object import ActionObject
 class Tea(GameObject):
     def __init__(self, game_instance):
         super().__init__(game_instance)
-        self.flavour_impact = ["cardboard", "regret-like"]
+        self.add_taste("cardboard", 1.0, 1)
+        self.add_taste("regret", 0.6, 4)
         self.property = Physical.SAND
         self.name = "tea"
         self.game_instance = game_instance

@@ -1,7 +1,7 @@
 from game_objects import *
 from components import *
 from src.printing import *
-from src.state import Physical
+from src.state import Physical, Temperature
 from src.action_object import ActionObject  
 from random import choice
 
@@ -19,8 +19,11 @@ class Fridge(GameObject):
         self.AddComponent(Throwable())
         self.has_watched = False
         self.container: Container = self.AddComponent(Container())
-        self.flavour_impact = ["refrigerant", "electronics"]
+        self.add_taste("refrigerant", 0.7, 7)
+        self.add_taste("electronic", 0.4, 3)
         self.property = Physical.SOLID
+        self.add_state(Temperature.COLD)
+
 
     def open(self):
         say(f"You {action("open")} the {thing("fridge")} door. As usual, the hinges make that little squeek when the door is almost open.")

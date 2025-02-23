@@ -32,7 +32,7 @@ class Mixture(GameObject):
             self.position = obj.position
 
             #add flavour
-            self.flavour_impact.extend(obj.flavour_impact)
+            self.extend_taste(obj.taste)
 
             #add composition
             self.in_mixture.append(obj)

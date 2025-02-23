@@ -9,7 +9,7 @@ class Tears(GameObject):
         super().__init__(game_instance)
         self.name = "tears"
         self.property = Physical.LIQUID
-        self.flavour_impact = ["salt"]
+        self.add_taste("salt", 0.7, 2)
         self.AddComponent(Watchable(f"You feel proud, because you made it. It looks like an ordinary {thing(self.name)}"))
         self.AddComponent(Drinkable())
         self.AddComponent(Slapable(f"The {thing(self.name)} cannot hurt you anymore."))

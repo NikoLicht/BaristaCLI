@@ -2,6 +2,7 @@ from .component import Component
 from .container import Container
 from src.printing import *
 from src.action_object import ActionObject
+from src.state import Temperature
 
 class Boilable(Component):
     """A component that makes an object boilable."""
@@ -14,7 +15,7 @@ class Boilable(Component):
             say(f"You boil the {thing(self.owner.name)}.")
         else:
             say(f"You also boil the {thing(self.owner.name)} because {self.owner.position.name} contains the {thing(self.owner.name)}")
-        self.owner.add_state("hot")
+        self.owner.add_state(Temperature.HOT)
 
         container : Container = self.owner.get_component("container")
         if container is not None:

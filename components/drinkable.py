@@ -17,5 +17,4 @@ class Drinkable(Component):
             if self.flavour_text is not None:
                 say(f"You {action("drink")} the {thing(self.owner.name)}. {self.flavour_text}")
             else:
-                say(f"You {action("drink")} the {thing(self.owner.name)}, quite refreshing. While swirling it around in your mouth, you detect notes of {gr.make_list(self.owner.flavour_impact)}")
-        self.owner.add_state("consumed")
+                say(f"You {action("drink")} the {thing(self.owner.name)}, quite refreshing. While swirling it around in your mouth, you detect notes of {gr.make_list(self.owner.get_flavour_list())}")

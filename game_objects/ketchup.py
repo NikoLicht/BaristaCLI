@@ -13,6 +13,7 @@ class Ketchup(GameObject):
         self.AddComponent(Container())
         self.AddComponent(Edible("Its a rather acidic and thick sensation."))
         self.AddComponent(Slapable(f"Everything is now semi-covered in {thing("ketchup")}. What a mess."))
-        self.flavour_impact = ["vinegar", "tomato-like"]
+        self.add_taste("vinegar", 0.7, 10)
+        self.add_taste("tomato-like", 0.4, 12)
         self.property = Physical.LIQUID
     

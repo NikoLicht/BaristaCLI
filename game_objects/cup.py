@@ -11,7 +11,7 @@ class Cup(GameObject):
         super().__init__(game_instance)
         self.name = "cup"
         self.property = Physical.SOLID
-        self.flavour_impact = ["gravel"]
+        self.add_taste("gravel", 0.3, 5)
         self.game_instance = game_instance
         self.weight = 421
         self.lore = "This is a double-walled ceramic thermo Loveramics Nomad mug, holding approximatly 250ml. In the color taupe. Very nice."

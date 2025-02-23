@@ -144,7 +144,7 @@ class CLI():
                     f"- Use {action("actions")} {thing("object")} to see actions for [italic]that[/italic] object eg. {action("actions")} {thing("water")}.",
                     f"- Some actions like {action("put")} are more complex and require a grammar like: {action("put")} {thing("water")} {req("into")} {thing("kettle")}.", 
                     f"     - You can find out more about a specific action by typing {action("help")} {action("action")} eg. {action("help")} {thing("put")}.", 
-                    f"  Use {thing("object")} on its own, to get more information about that thing. eg.: {thing("cup")}.",
+                    f"- Use {thing("object")} on its own, to get more information about that thing. eg.: {thing("cup")}.",
                 )
 
             case "objects":
