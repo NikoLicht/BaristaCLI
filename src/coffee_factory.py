@@ -39,7 +39,6 @@ class CoffeFactory():
                 temperature += step_size
             if ing.has_state(Temperature.COLD):
                 temperature -= step_size
-            print(f"Temperature of {ing.name} is {temperature}")
         return  temperature
 
 
@@ -62,7 +61,7 @@ class CoffeFactory():
         total_extraction_level = sum(extract.flavors.values())
         average_extraction_level = total_extraction_level / len(extract.flavors)
         waste = {flavour: extract.flavors[flavour]*1.5 for flavour in extract.flavors if extract.flavors[flavour] > average_extraction_level}
-        print(waste)
+        return waste
 
 
     def map_temperature(self, value: float) -> Temperature:

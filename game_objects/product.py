@@ -18,6 +18,7 @@ class Product(GameObject):
         self.property = Physical.LIQUID
         self.AddComponent(Drinkable())
         self.register_callable_method(ActionObject("taste", None, False, [self.taste_product]))
+        self.register_callable_method(ActionObject("sell", None, False, [self.sell]))
         self.fixed_flavours = []
         self.threhold_prominent: float = 0.0
         self.threhold_medium: float = 0.0
@@ -40,6 +41,15 @@ class Product(GameObject):
         for flavour_text in self.fixed_flavours:
             say(flavour_text[0])
 
+    def sell(self):
+        say(f"You {action("sell")} the {thing(self.name)} to a customer.")
+        price_str: str = "$ " + str(int(self.calculate_price()))
+        say(f"You earn {price_str} dollars. Good job.")
+        self.game_instance.money += self.calculate_price()
+
+    def calculate_price(self):
+        return 5.0
+    
 
     def get_taste_string(self, name: str, amount: float) -> str:
         prominent_replies = [

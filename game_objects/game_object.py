@@ -84,23 +84,23 @@ class GameObject:
             time_factor = 1
             decay_speed = 0.05
 
-            print(f"------- calculating extraction of {taste_key} from {self.name}.")
-            print(f"   amount     | {amount}")
-            print(f"   solubility | {solubility}")
-            print(f"   temp       | {temp}")
-            print(f"   diffusion  | {diffusion}")
-            print(f"")
+            #print(f"------- calculating extraction of {taste_key} from {self.name}.")
+            #print(f"   amount     | {amount}")
+            #print(f"   solubility | {solubility}")
+            #print(f"   temp       | {temp}")
+            #print(f"   diffusion  | {diffusion}")
+            #print(f"")
 
             for time_step in range(time + 1):
-                print(f">  {time_step}. Iteration _")
+                #print(f">  {time_step}. Iteration _")
                 time_factor = 1 / (1 + decay_speed * time_step) # less and less will be extracted
                 time_factor = max(time_factor, 0.1) 
-                print(f"   time factor = {round(time_factor, 2)}")
+                #print(f"   time factor = {round(time_factor, 2)}")
                 iteration_sum = amount * solubility * diffusion * temp * time_factor
-                print(f"   this iteration= {round(iteration_sum, 2)}")
+                #print(f"   this iteration= {round(iteration_sum, 2)}")
                 total_extraction += iteration_sum
-                print(f"   total = {round(total_extraction, 2)}")
-                print(f"")
+                #print(f"   total = {round(total_extraction, 2)}")
+                #print(f"")
             extract.flavors[taste_key] = total_extraction
         return extract
 

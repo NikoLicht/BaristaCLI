@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class CLI():
     def __init__(self):
         self.game_instance : "Game" = None
-        self.single_word_actions = ["exit", "quit", "help", "objects", "actions", "actions-all"]
+        self.single_word_actions = ["exit", "quit", "help", "objects", "actions", "actions-all", "money"]
 
     def set_game(self, set_game):
         self.game_instance = set_game
@@ -119,7 +119,7 @@ class CLI():
                     self.game_instance.registered_actions[key].help()
                     return True
                 if key in self.game_instance.objects:
-                    self.game_instance.objects[key].try_call_method("actions")
+                    self.game_instance.objects[key].explanation()
                     return True
         return False
 
@@ -137,14 +137,15 @@ class CLI():
             case "help":
                 say(f"{header("Help!")}")
                 say(
-                    f"You are the {barista()} in this command line coffee brewing experience",
+                    f"You are the {barista()} in this command line coffee brewing experience.",
                     f"You interact by using {action("actions")} on {thing("objects")}. You do this by typing here in your terminal.",
                     f"- Use {action("objects")} to see all available {thing("objects")}.",
+                    f"     - You can find out more about a specific object by typing {action("help")} {thing("object")} eg. {action("help")} {thing("cup")}.",
+                    f"",
                     f"- Use {action("actions")} to get more info about actions.",
-                    f"- Use {action("actions")} {thing("object")} to see actions for [italic]that[/italic] object eg. {action("actions")} {thing("water")}.",
+                    f"- Use {action("actions")} {thing("object")} to see actions applicable [italic]that[/italic] object eg. {action("actions")} {thing("water")}.",
                     f"- Some actions like {action("put")} are more complex and require a grammar like: {action("put")} {thing("water")} {req("into")} {thing("kettle")}.", 
                     f"     - You can find out more about a specific action by typing {action("help")} {action("action")} eg. {action("help")} {thing("put")}.", 
-                    f"- Use {thing("object")} on its own, to get more information about that thing. eg.: {thing("cup")}.",
                 )
 
             case "objects":
@@ -165,11 +166,15 @@ class CLI():
                     f"   And then a few actions you do to {thing("objects")}:",
                     f"   {action("status")} {thing("object")} - to see the current state of the object.",
                     f"   {action("actions")} {thing("object")} - to see the actions you can do to [italic]that[/italic] object.",
+                    f"   {action("help")} {thing("action")} - To get more info about [italic]that[/italic] particular action.",
                     f"   {action("put")} {thing("object")} {req("into")} {thing("object")} - to put an object inside another object (that supports it).",
-                    f"   {action("object")} - To get more info about [italic]that[/italic] particular thing.",
+                    f"   {action("help")} {thing("object")} - To get more info about [italic]that[/italic] particular thing.",
                     f"",
                     f"   You can find out more about a specific action by typing {action("help")} {action("action")} eg. {action("help")} {thing("put")}.", 
                     )
+                
+            case "money":
+                say(f"You have $ {self.game_instance.money} dollars.")
                 
             case "actions-all":
                 for key, action_obj in self.game_instance.registered_actions.items():

@@ -77,10 +77,10 @@ class AeroPress(GameObject):
         cfactory = CoffeFactory(self.game_instance)
         extraction_result =  cfactory.extract_flavors(contents, self.extraction_time)
 
-        for key, val in extraction_result.flavors.items():
-            print(f"    extraction of {key}ness - {round(val, 2)}.")
+        #for key, val in extraction_result.flavors.items():
+            #print(f"    extraction of {key}ness - {round(val, 2)}.")
 
-        print(cfactory.get_waste_flavours(extraction_result))
+        #print(cfactory.get_waste_flavours(extraction_result))
 
         cfactory.create_product(extraction_result, into_target)
         cfactory.create_puck(extraction_result, self)

@@ -28,6 +28,8 @@ class Game:
             "tea": Tea(self)
         }
 
+        self.money: float = 0
+
     def register_action(self, action: ActionObject):
         if action.name not in self.registered_actions:
             self.registered_actions[action.name.lower()] = action
